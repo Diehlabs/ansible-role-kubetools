@@ -21,17 +21,18 @@
     # insertbefore: BOF
     line: "{{ item }}"
   loop:
-    - "source <(kubectl completion bash)"
-    - "alias k=kubectl"
-    - "complete -F __start_kubectl k"
+    - 'source <(kubectl completion bash)'
+    - 'alias k=kubectl'
+    - 'complete -F __start_kubectl k'
 
 - name: Configure kubectl completion for zshell
   ansible.builtin.lineinfile:
     path: "/Users/{{ kctl_user_id }}/.zshrc"
     line: "{{ item }}"
   loop:
-    - "alias k=kubectl"
-    - "[[ $commands[kubectl] ]] && source <(kubectl completion zsh)"
+    - 'alias k=kubectl'
+    - '[[ $commands[kubectl] ]] && source <(kubectl completion zsh)'
+    - 'export do="-o yaml --dry-run=client"'
   when: kctl_shell_type == 'zsh'
 
 - name: Configure vimrc for kube usage
@@ -39,6 +40,6 @@
     path: "/Users/{{ kctl_user_id }}/.vimrc"
     line: "{{ item }}"
   loop:
-    - "set expandtab"
-    - "set tabstop=2"
-    - "set shiftwidth=2"
+    - 'set expandtab'
+    - 'set tabstop=2'
+    - 'set shiftwidth=2'
