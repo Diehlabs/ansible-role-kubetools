@@ -1,4 +1,16 @@
 ---
+- name: Ensure rc files exist
+  file:
+    state: touch
+    mode: u=rw,g=rw,o=r
+    owner: "{{ kctl_user_id }}"
+    group: "{{ kctl_user_id }}"
+    path: "{{ item }}"
+  loop:
+    - "/Users/{{ kctl_user_id }}/.bashrc"
+    - "/Users/{{ kctl_user_id }}/.zshrc"
+    - "/Users/{{ kctl_user_id }}/.vimrc"
+
 - name: Download kubectl binary (OSX amd64)
   get_url:
     url: "{{ kubectl_dl_url }}"
