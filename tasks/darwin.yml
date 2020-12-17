@@ -2,22 +2,43 @@
 - name: Download kubectl binary (OSX amd64)
   get_url:
     url: "{{ kubectl_dl_url }}"
-    dest: "/usr/local/bin/kubectl"
-    mode: mode: "u=rwx,g=rx,o=rx"
+    dest: /usr/local/bin/kubectl
+    mode: mode: u=rwx,g=rx,o=rx
     owner: "{{ kctl_user_id }}"
     group: "{{ kctl_group_id }}"
 
-- name: Autocompletion for zsh
-  lineinfile:
-    path: /Users/{{ kctl_user_id }}/.zshrc
-    line: source <(kubectl completion zsh)
-    insertbefore: BOF
+- name: Download helm binary (OSX amd64)
+  get_url:
+    url: "{{ helm.dl_url }}"
+    dest: /usr/local/bin/
+    mode: mode: u=rwx,g=rx,o=rx
+    owner: "{{ kctl_user_id }}"
+    group: "{{ kctl_group_id }}"
+
+- name: Configure kubectl completion for bash
+  ansible.builtin.lineinfile:
+    path: "/Users/{{ kctl_user_id }}/.bashrc"
+    # insertbefore: BOF
+    line: {{ item }}
+  loop:
+    - "source <(kubectl completion bash)"
+    - "alias k=kubectl"
+    - "complete -F __start_kubectl k"
+
+- name: Configure kubectl completion for zshell
+  ansible.builtin.lineinfile:
+    path: "/Users/{{ kctl_user_id }}/.zshrc"
+    line: {{ item }}
+  loop:
+    - "alias k=kubectl"
+    - "[[ $commands[kubectl] ]] && source <(kubectl completion zsh)"
   when: kctl_shell_type == 'zsh'
 
-- name: Download helm binary (OSX amd64)
-    get_url:
-      url: "{{ helm.dl_url }}"
-      dest: "/usr/local/bin/"
-      mode: mode: "u=rwx,g=rx,o=rx"
-      owner: "{{ kctl_user_id }}"
-      group: "{{ kctl_group_id }}"
+- name: Configure vimrc for kube usage
+  ansible.builtin.lineinfile:
+    path: "/Users/{{ kctl_user_id }}/.vimrc"
+    line: {{ item }}
+  loop:
+    - "set expandtab"
+    - "set tabstop=2"
+    - "set shiftwidth=2"

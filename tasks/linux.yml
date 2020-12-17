@@ -2,8 +2,8 @@
 - name: Download kubectl binary (Linux amd64)
   get_url:
     url: "{{ kubectl_dl_url }}"
-    dest: "/usr/local/bin/"
-    mode: "u=rwx,g=rx,o=rx"
+    dest: /usr/local/bin/
+    mode: u=rwx,g=rx,o=rx
     owner: root
     group: root
 
@@ -11,6 +11,40 @@
   get_url:
     url: "{{ helm_dl_url }}"
     dest: /tmp
-  notify: Extract Helm
 
-#source /usr/share/bash-completion/bash_completion
+- name: Extract Helm
+  unarchive:
+    src: "/tmp/helm-v{{ helm_version }}-linux-amd64.tar.gz"
+    remote_src: yes
+    dest: /usr/local/bin/
+    extra_opts: [--strip-components=1]
+    mode: "u=rwx,g=rx,o=rx"
+    owner: root
+    group: root
+
+- name: Configure kubectl completion for bash
+  ansible.builtin.lineinfile:
+    path: "/home/{{ kctl_user_id }}/.bashrc"
+    line: {{ item }}
+  loop:
+    - "source <(kubectl completion bash)"
+    - "alias k=kubectl"
+    - "complete -F __start_kubectl k"
+
+- name: Configure kubectl completion for zshell
+  ansible.builtin.lineinfile:
+    path: "/home/{{ kctl_user_id }}/.zshrc"
+    line: {{ item }}
+  loop:
+    - "alias k=kubectl"
+    - "[[ $commands[kubectl] ]] && source <(kubectl completion zsh)"
+  when: kctl_shell_type == 'zsh'
+
+- name: Configure vimrc for kube usage
+  ansible.builtin.lineinfile:
+    path: "/home/{{ kctl_user_id }}/.vimrc"
+    line: {{ item }}
+  loop:
+    - "set expandtab"
+    - "set tabstop=2"
+    - "set shiftwidth=2"
