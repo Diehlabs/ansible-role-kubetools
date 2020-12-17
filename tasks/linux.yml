@@ -25,7 +25,7 @@
 - name: Configure kubectl completion for bash
   ansible.builtin.lineinfile:
     path: "/home/{{ kctl_user_id }}/.bashrc"
-    line: {{ item }}
+    line: "{{ item }}"
   loop:
     - "source <(kubectl completion bash)"
     - "alias k=kubectl"
@@ -34,7 +34,7 @@
 - name: Configure kubectl completion for zshell
   ansible.builtin.lineinfile:
     path: "/home/{{ kctl_user_id }}/.zshrc"
-    line: {{ item }}
+    line: "{{ item }}"
   loop:
     - "alias k=kubectl"
     - "[[ $commands[kubectl] ]] && source <(kubectl completion zsh)"
@@ -43,7 +43,7 @@
 - name: Configure vimrc for kube usage
   ansible.builtin.lineinfile:
     path: "/home/{{ kctl_user_id }}/.vimrc"
-    line: {{ item }}
+    line: "{{ item }}"
   loop:
     - "set expandtab"
     - "set tabstop=2"
