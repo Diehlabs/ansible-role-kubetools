@@ -6,6 +6,8 @@
     owner: "{{ kctl_user_id }}"
     group: "{{ kctl_user_id }}"
     path: "{{ item }}"
+    access_time: preserve
+    modification_time: preserve
   loop:
     - "/Users/{{ kctl_user_id }}/.bashrc"
     - "/Users/{{ kctl_user_id }}/.zshrc"

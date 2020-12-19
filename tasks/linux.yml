@@ -1,16 +1,4 @@
 ---
-- name: Ensure rc files exist
-  file:
-    state: touch
-    mode: u=rw,g=rw,o=r
-    owner: "{{ kctl_user_id }}"
-    group: "{{ kctl_user_id }}"
-    path: "{{ item }}"
-  loop:
-    - "/home/{{ kctl_user_id }}/.bashrc"
-    - "/home/{{ kctl_user_id }}/.zshrc"
-    - "/home/{{ kctl_user_id }}/.vimrc"
-
 - name: Download kubectl binary (Linux amd64)
   get_url:
     url: "{{ kubectl_dl_url }}"
@@ -34,7 +22,22 @@
     owner: root
     group: root
 
-- name: Configure .bashrc for k98s
+### User rc files
+- name: Ensure rc files exist
+  file:
+    state: touch
+    mode: u=rw,g=rw,o=r
+    owner: "{{ kctl_user_id }}"
+    group: "{{ kctl_user_id }}"
+    path: "{{ item }}"
+    access_time: preserve
+    modification_time: preserve
+  loop:
+    - "/home/{{ kctl_user_id }}/.bashrc"
+    - "/home/{{ kctl_user_id }}/.zshrc"
+    - "/home/{{ kctl_user_id }}/.vimrc"
+
+- name: Configure .bashrc for k8s
   ansible.builtin.lineinfile:
     path: "/home/{{ kctl_user_id }}/.bashrc"
     line: "{{ item }}"
