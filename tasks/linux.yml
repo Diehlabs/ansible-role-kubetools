@@ -1,6 +1,6 @@
 ---
 - name: Download kubectl binary (Linux amd64)
-  get_url:
+  ansible.builtin.get_url:
     url: "{{ kubectl_dl_url }}"
     dest: /usr/local/bin/
     mode: u=rwx,g=rx,o=rx
@@ -8,7 +8,7 @@
     group: root
 
 - name: Download helm binary (Linux amd64)
-  get_url:
+  ansible.builtin.get_url:
     url: "{{ helm_dl_url }}"
     dest: /tmp
 
@@ -24,7 +24,7 @@
 
 ### User rc files
 - name: Ensure rc files exist
-  file:
+  ansible.builtin.file:
     state: touch
     mode: u=rw,g=rw,o=r
     owner: "{{ kctl_user_id }}"
