@@ -13,7 +13,7 @@
     dest: /tmp
 
 - name: Extract Helm
-  unarchive:
+  ansible.builtin.unarchive:
     src: "/tmp/helm-v{{ helm_version }}-linux-amd64.tar.gz"
     remote_src: yes
     dest: /usr/local/bin/
