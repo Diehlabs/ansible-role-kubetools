@@ -2,6 +2,8 @@
 # vars file for kubectl
 helm_dl_url: "https://get.helm.sh/helm-v{{ helm_version }}-{{ ansible_system|lower }}-{{ kctl_arch[ansible_architecture] }}.tar.gz"
 kubectl_dl_url: "https://storage.googleapis.com/kubernetes-release/release/v{{ kubectl_version }}/bin/{{ ansible_system|lower }}/{{ kctl_arch[ansible_architecture] }}/kubectl"
-kctl_arch:
-  x86_64: amd64
-  arm64: arm64
+kctl_arch: "{{ ansible_architecture == "amd64" | default(ansible_architecture, true) }}"
+  # x86_64: amd64
+  # arm64: arm64
+
+
