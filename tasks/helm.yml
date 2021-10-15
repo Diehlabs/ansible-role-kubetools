@@ -5,6 +5,7 @@
     dest: /tmp
 
 - name: Extract Helm
+  become: yes
   ansible.builtin.unarchive:
     src: "/tmp/helm-v{{ helm_version }}-{{ ansible_system|lower }}-{{ kctl_arch[ansible_architecture] }}.tar.gz"
     remote_src: yes

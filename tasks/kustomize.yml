@@ -5,6 +5,7 @@
     dest: /tmp
 
 - name: Extract kustomize
+  become: yes
   ansible.builtin.unarchive:
     src: "/tmp/kustomize_v{{ kustomize_version }}_{{ ansible_system|lower }}_{{ kctl_arch[ansible_architecture] }}.tar.gz"
     remote_src: yes

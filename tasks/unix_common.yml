@@ -1,5 +1,6 @@
 ---
 - name: Download kubectl binary (Linux amd64)
+  become: yes
   ansible.builtin.get_url:
     url: "{{ kubectl_dl_url }}"
     dest: /usr/local/bin/
