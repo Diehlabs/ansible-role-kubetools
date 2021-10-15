@@ -1,0 +1,56 @@
+---
+- name: Download kubectl binary (Linux amd64)
+  ansible.builtin.get_url:
+    url: "{{ kubectl_dl_url }}"
+    dest: /usr/local/bin/
+    mode: u=rwx,g=rx,o=rx
+    owner: root
+    group: root
+
+- name: Install helm
+  include: helm.yml
+
+- name: Install kustomize
+  include: kustomize.yml
+
+### User rc files
+- name: Configure .bashrc for k8s
+  ansible.builtin.lineinfile:
+    path: "{{ git_user_home_path_default }}/.bashrc"
+    line: "{{ item }}"
+    create: true
+    mode: u=rw,g=r,o=r
+    owner: "{{ kctl_user_id }}"
+    group: "{{ kctl_user_id }}"
+  loop:
+    - 'source <(kubectl completion bash)'
+    - 'alias k=kubectl'
+    - 'complete -F __start_kubectl k'
+    - 'export do="-o yaml --dry-run=client"'
+
+- name: Configure kubectl completion for zshell
+  ansible.builtin.lineinfile:
+    path: "{{ git_user_home_path_default }}/.zshrc.local"
+    line: "{{ item }}"
+    create: true
+    mode: u=rw,g=r,o=r
+    owner: "{{ kctl_user_id }}"
+    group: "{{ kctl_user_id }}"
+  loop:
+    - 'alias k=kubectl'
+    - '[[ $commands[kubectl] ]] && source <(kubectl completion zsh)'
+    - 'export do="-o yaml --dry-run=client"'
+  when: kctl_shell_type == 'zsh'
+
+- name: Configure vimrc for kube usage
+  ansible.builtin.lineinfile:
+    path: "{{ git_user_home_path_default }}/.vimrc"
+    line: "{{ item }}"
+    create: true
+    mode: u=rw,g=r,o=r
+    owner: "{{ kctl_user_id }}"
+    group: "{{ kctl_user_id }}"
+  loop:
+    - 'set expandtab'
+    - 'set tabstop=2'
+    - 'set shiftwidth=2'
