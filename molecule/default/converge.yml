@@ -1,0 +1,11 @@
+---
+- name: Converge
+  hosts: all
+  tasks:
+    - name: Add the user needed to test role with defaults
+      ansible.builtin.user:
+        name: chris
+
+    - name: "Include kubetools"
+      include_role:
+        name: "ansible-role-kubetools"

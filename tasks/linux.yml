@@ -34,7 +34,7 @@
     modification_time: preserve
   loop:
     - "/home/{{ kctl_user_id }}/.bashrc"
-    - "/home/{{ kctl_user_id }}/.zshrc"
+    - "/home/{{ kctl_user_id }}/.zshrc.local"
     - "/home/{{ kctl_user_id }}/.vimrc"
 
 - name: Configure .bashrc for k8s
@@ -49,7 +49,7 @@
 
 - name: Configure kubectl completion for zshell
   ansible.builtin.lineinfile:
-    path: "/home/{{ kctl_user_id }}/.zshrc"
+    path: "/home/{{ kctl_user_id }}/.zshrc.local"
     line: "{{ item }}"
   loop:
     - 'alias k=kubectl'

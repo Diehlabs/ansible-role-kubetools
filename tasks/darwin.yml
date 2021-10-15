@@ -10,14 +10,14 @@
     modification_time: preserve
   loop:
     - "/Users/{{ kctl_user_id }}/.bashrc"
-    - "/Users/{{ kctl_user_id }}/.zshrc"
+    - "/Users/{{ kctl_user_id }}/.zshrc.local"
     - "/Users/{{ kctl_user_id }}/.vimrc"
 
 - name: Download kubectl binary (OSX amd64)
   ansible.builtin.get_url:
     url: "{{ kubectl_dl_url }}"
     dest: /usr/local/bin/kubectl
-    mode: mode: u=rwx,g=rx,o=rx
+    mode: u=rwx,g=rx,o=rx
     owner: "{{ kctl_user_id }}"
     group: "{{ kctl_group_id }}"
 
@@ -25,7 +25,7 @@
   ansible.builtin.get_url:
     url: "{{ helm.dl_url }}"
     dest: /usr/local/bin/
-    mode: mode: u=rwx,g=rx,o=rx
+    mode: u=rwx,g=rx,o=rx
     owner: "{{ kctl_user_id }}"
     group: "{{ kctl_group_id }}"
 
@@ -41,7 +41,7 @@
 
 - name: Configure kubectl completion for zshell
   ansible.builtin.lineinfile:
-    path: "/Users/{{ kctl_user_id }}/.zshrc"
+    path: "/Users/{{ kctl_user_id }}/.zshrc.local"
     line: "{{ item }}"
   loop:
     - 'alias k=kubectl'

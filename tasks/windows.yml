@@ -3,4 +3,3 @@
   ansible.windows.win_ansible.builtin.get_url:
     url: "{{ kubectl_dl_url }}.exe"
     dest: "{{ kctl_bin_dir_win }}"
-
