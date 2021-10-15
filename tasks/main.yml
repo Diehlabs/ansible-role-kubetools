@@ -4,9 +4,6 @@
 # add helm repo helm3 repo add stable https://kubernetes-charts.storage.googleapis.com
 # add helm symlink?
 
-- name: Gather instance facts
-  setup:
-
 - name: Linux & OSX common tasks
   include_tasks: unix_common.yml
   when: ansible_system != 'Windows'
