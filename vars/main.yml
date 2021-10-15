@@ -9,6 +9,7 @@ kustomize_dl_url: "https://github.com/kubernetes-sigs/kustomize/releases/downloa
 kctl_arch:
   x86_64: amd64
   aarch64: arm64
+  arm64: arm64
 
 kctl_user_home_path_by_os:
   Darwin: "/Users/{{ kctl_user_id }}"
