@@ -1,0 +1,15 @@
+---
+- name: Download kustomize binary (Linux amd64)
+  ansible.builtin.get_url:
+    url: "{{ kustomize_dl_url }}"
+    dest: /tmp
+
+- name: Extract kustomize
+  ansible.builtin.unarchive:
+    src: "/tmp/kustomize_v{{ kustomize_version }}_{{ ansible_system|lower }}_{{ kctl_arch[ansible_architecture] }}.tar.gz"
+    remote_src: yes
+    dest: /usr/local/bin/
+    extra_opts: [--strip-components=1]
+    mode: u=rwx,g=rx,o=rx
+    owner: root
+    group: root
