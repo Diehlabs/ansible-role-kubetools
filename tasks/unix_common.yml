@@ -17,7 +17,7 @@
 ### User rc files
 - name: Configure .bashrc for k8s
   ansible.builtin.lineinfile:
-    path: "{{ kctl_user_home_path_by_os[ansible_system] }}/{{ kctl_user_id }}/.bashrc"
+    path: "{{ kctl_user_home_path_by_os[ansible_system] }}/.bashrc"
     line: "{{ item }}"
     create: true
     mode: u=rw,g=r,o=r
@@ -31,7 +31,7 @@
 
 - name: Configure kubectl completion for zshell
   ansible.builtin.lineinfile:
-    path: "{{ kctl_user_home_path_by_os[ansible_system] }}/{{ kctl_user_id }}/.zshrc.local"
+    path: "{{ kctl_user_home_path_by_os[ansible_system] }}/.zshrc.local"
     line: "{{ item }}"
     create: true
     mode: u=rw,g=r,o=r
@@ -45,7 +45,7 @@
 
 - name: Configure vimrc for kube usage
   ansible.builtin.lineinfile:
-    path: "{{ kctl_user_home_path_by_os[ansible_system] }}/{{ kctl_user_id }}/.vimrc"
+    path: "{{ kctl_user_home_path_by_os[ansible_system] }}/.vimrc"
     line: "{{ item }}"
     create: true
     mode: u=rw,g=r,o=r

@@ -12,9 +12,9 @@ kctl_arch:
   arm64: arm64
 
 kctl_user_home_path_by_os:
-  Darwin: "/Users"
-  Linux: "/home"
-  Windows: "c:/Users"
+  Darwin: "/Users/{{ kctl_user_id }}"
+  Linux: "/home/{{ kctl_user_id }}"
+  Windows: "c:/Users/{{ kctl_user_id }}"
 
 kctl_admin_group_by_os:
   Darwin: wheel
