@@ -9,3 +9,5 @@
     - name: "Include kubetools"
       include_role:
         name: "ansible-role-kubetools"
+      vars:
+        kctl_user_id: chris

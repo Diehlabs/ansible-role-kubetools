@@ -1,11 +1,12 @@
 ---
 - name: Download kubectl binary (Linux amd64)
+  become: yes
   ansible.builtin.get_url:
     url: "{{ kubectl_dl_url }}"
     dest: /usr/local/bin/
     mode: u=rwx,g=rx,o=rx
     owner: root
-    group: root
+    group: "{{ kctl_admin_group_by_os[ansible_system] }}"
 
 - name: Install helm
   include: helm.yml
@@ -21,7 +22,7 @@
     create: true
     mode: u=rw,g=r,o=r
     owner: "{{ kctl_user_id }}"
-    group: "{{ kctl_user_id }}"
+    group: "{{ kctl_user_gid_by_os[ansible_system] }}"
   loop:
     - 'source <(kubectl completion bash)'
     - 'alias k=kubectl'
@@ -35,7 +36,7 @@
     create: true
     mode: u=rw,g=r,o=r
     owner: "{{ kctl_user_id }}"
-    group: "{{ kctl_user_id }}"
+    group: "{{ kctl_user_gid_by_os[ansible_system] }}"
   loop:
     - 'alias k=kubectl'
     - '[[ $commands[kubectl] ]] && source <(kubectl completion zsh)'
@@ -49,7 +50,7 @@
     create: true
     mode: u=rw,g=r,o=r
     owner: "{{ kctl_user_id }}"
-    group: "{{ kctl_user_id }}"
+    group: "{{ kctl_user_gid_by_os[ansible_system] }}"
   loop:
     - 'set expandtab'
     - 'set tabstop=2'
