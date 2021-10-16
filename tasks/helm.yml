@@ -13,4 +13,4 @@
     extra_opts: [--strip-components=1]
     mode: u=rwx,g=rx,o=rx
     owner: root
-    group: root
+    group: "{{ kctl_admin_group_by_os[ansible_system] }}"

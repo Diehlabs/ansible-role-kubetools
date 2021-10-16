@@ -6,7 +6,7 @@
     dest: /usr/local/bin/
     mode: u=rwx,g=rx,o=rx
     owner: root
-    group: root
+    group: "{{ kctl_admin_group_by_os[ansible_system] }}"
 
 - name: Install helm
   include: helm.yml
