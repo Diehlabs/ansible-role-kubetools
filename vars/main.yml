@@ -16,7 +16,7 @@ kctl_user_home_path_by_os:
   Linux: "/home/{{ kctl_user_id }}"
   Windows: "c:/Users/{{ kctl_user_id }}"
 
-ktcl_admin_group_by_os:
+kctl_admin_group_by_os:
   Darwin: wheel
   Linux: root
   Windows: Administrators
