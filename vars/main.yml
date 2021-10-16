@@ -11,6 +11,11 @@ kctl_arch:
   aarch64: arm64
   arm64: arm64
 
+kctl_user_gid_by_os:
+  Darwin: staff
+  Linux: "{{ kctl_user_id }}"
+  Windows: Users
+
 kctl_user_home_path_by_os:
   Darwin: "/Users/{{ kctl_user_id }}"
   Linux: "/home/{{ kctl_user_id }}"

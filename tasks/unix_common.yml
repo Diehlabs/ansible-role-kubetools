@@ -22,7 +22,7 @@
     create: true
     mode: u=rw,g=r,o=r
     owner: "{{ kctl_user_id }}"
-    group: "{{ kctl_user_id }}"
+    group: "{{ kctl_user_gid_by_os[ansible_system] }}"
   loop:
     - 'source <(kubectl completion bash)'
     - 'alias k=kubectl'
@@ -36,7 +36,7 @@
     create: true
     mode: u=rw,g=r,o=r
     owner: "{{ kctl_user_id }}"
-    group: "{{ kctl_user_id }}"
+    group: "{{ kctl_user_gid_by_os[ansible_system] }}"
   loop:
     - 'alias k=kubectl'
     - '[[ $commands[kubectl] ]] && source <(kubectl completion zsh)'
@@ -50,7 +50,7 @@
     create: true
     mode: u=rw,g=r,o=r
     owner: "{{ kctl_user_id }}"
-    group: "{{ kctl_user_id }}"
+    group: "{{ kctl_user_gid_by_os[ansible_system] }}"
   loop:
     - 'set expandtab'
     - 'set tabstop=2'
