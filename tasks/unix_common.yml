@@ -27,7 +27,7 @@
     - 'source <(kubectl completion bash)'
     - 'alias k=kubectl'
     - 'complete -F __start_kubectl k'
-    - 'export do="--dry-run --save-config -o yaml"'
+    - 'export do="--dry-run=client --save-config -o yaml"'
 
 - name: Configure kubectl completion for zshell
   ansible.builtin.lineinfile:
@@ -40,7 +40,7 @@
   loop:
     - 'alias k=kubectl'
     - '[[ $commands[kubectl] ]] && source <(kubectl completion zsh)'
-    - 'export do="--dry-run --save-config -o yaml"'
+    - 'export do="--dry-run=client --save-config -o yaml"'
   when: kctl_shell_type == 'zsh'
 
 - name: Configure vimrc for kube usage
