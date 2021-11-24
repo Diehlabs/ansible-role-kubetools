@@ -1,15 +1,12 @@
 ---
-- hosts: all
-  vars:
-  tasks:
-    - name: Tap Tanzu homebrew repo (OSX)
-      community.general.homebrew_tap:
-        name: vmware-tanzu/tanzu
-      when: ansible_system == "Darwin"
-    
-    - name: Install Tanzu packages (OSX)
-      ansible.builtin.homebrew:
-        name:
-          - tanzu-community-edition
-        state: "present"
-      when: ansible_system == "Darwin"
+- name: Tap Tanzu homebrew repo (OSX)
+  community.general.homebrew_tap:
+    name: vmware-tanzu/tanzu
+  when: ansible_system == "Darwin"
+
+- name: Install Tanzu packages (OSX)
+  ansible.builtin.homebrew:
+    name:
+      - tanzu-community-edition
+    state: "present"
+  when: ansible_system == "Darwin"
