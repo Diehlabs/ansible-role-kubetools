@@ -9,5 +9,7 @@ kctl_group_id: "{{ kctl_user_id }}"
 kctl_shell_type: zsh
 kctl_bin_dir_win: c:\windows
 kctl_config_source_dir: # ~/k8s-config
+kctl_bin_path: /usr/local/bin/
 kctl_kubeconfig_files:
   - admin.kubeconfig
+kctl_tanzu: true

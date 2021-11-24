@@ -3,9 +3,9 @@
   become: yes
   ansible.builtin.get_url:
     url: "{{ kubectl_dl_url }}"
-    dest: /usr/local/bin/
+    dest: "{{ kctl_bin_path }}"
     mode: u=rwx,g=rx,o=rx
-    owner: root
+    owner: "{{ kctl_user_id }}"
     group: "{{ kctl_admin_group_by_os[ansible_system] }}"
 
 - name: Install helm
