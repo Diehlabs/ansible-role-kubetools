@@ -12,8 +12,8 @@
   include_tasks: windows.yml
   when: ansible_system == 'Windows'
 
-- name: Install kubectl (Windows amd64)
-  include_tasks: windows.yml
+- name: Install kubectl (OSX amd64)
+  include_tasks: tanzu.yml
   when: ansible_system == 'Darwin' and kctl_tanzu == true
 
 # add krew!

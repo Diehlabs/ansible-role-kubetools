@@ -16,12 +16,7 @@ kctl_user_gid_by_os:
   Linux: "{{ kctl_user_id }}"
   Windows: Users
 
-kctl_user_home_path_by_os:
-  Darwin: "/Users/{{ kctl_user_id }}"
-  Linux: "/home/{{ kctl_user_id }}"
-  Windows: "c:/Users/{{ kctl_user_id }}"
-
-kctl_admin_group_by_os:
-  Darwin: wheel
-  Linux: root
-  Windows: Administrators
+# kctl_admin_group_by_os:
+#   Darwin: wheel
+#   Linux: root
+#   Windows: Administrators

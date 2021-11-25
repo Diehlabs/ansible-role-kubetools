@@ -5,7 +5,7 @@
     dest: "{{ kctl_bin_path }}"
     mode: u=rwx,g=rx,o=rx
     owner: "{{ kctl_user_id }}"
-    group: "{{ kctl_admin_group_by_os[ansible_system] }}"
+    group: "{{ kctl_group_id }}"
 
 - name: Install helm
   include: helm.yml
@@ -16,12 +16,12 @@
 ### User rc files
 - name: Configure .bashrc for k8s
   ansible.builtin.lineinfile:
-    path: "{{ kctl_user_home_path_by_os[ansible_system] }}/.bashrc"
+    path: "~{{ kctl_user_id }}/.bashrc"
     line: "{{ item }}"
     create: true
     mode: u=rw,g=r,o=r
     owner: "{{ kctl_user_id }}"
-    group: "{{ kctl_user_gid_by_os[ansible_system] }}"
+    group: "{{ kctl_group_id }}"
   loop:
     - 'source <(kubectl completion bash)'
     - 'alias k=kubectl'
@@ -30,12 +30,12 @@
 
 - name: Configure kubectl completion for zshell
   ansible.builtin.lineinfile:
-    path: "{{ kctl_user_home_path_by_os[ansible_system] }}/.zshrc.local"
+    path: "~{{ kctl_user_id }}/.zshrc.local"
     line: "{{ item }}"
     create: true
     mode: u=rw,g=r,o=r
     owner: "{{ kctl_user_id }}"
-    group: "{{ kctl_user_gid_by_os[ansible_system] }}"
+    group: "{{ kctl_group_id }}"
   loop:
     - 'alias k=kubectl'
     - '[[ $commands[kubectl] ]] && source <(kubectl completion zsh)'
@@ -44,12 +44,12 @@
 
 - name: Configure vimrc for kube usage
   ansible.builtin.lineinfile:
-    path: "{{ kctl_user_home_path_by_os[ansible_system] }}/.vimrc"
+    path: "~{{ kctl_user_id }}/.vimrc"
     line: "{{ item }}"
     create: true
     mode: u=rw,g=r,o=r
     owner: "{{ kctl_user_id }}"
-    group: "{{ kctl_user_gid_by_os[ansible_system] }}"
+    group: "{{ kctl_group_id }}"
   loop:
     - 'set expandtab'
     - 'set tabstop=2'
