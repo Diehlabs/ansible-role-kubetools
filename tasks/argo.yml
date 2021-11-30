@@ -1,0 +1,22 @@
+---
+- name: Download Argo kubectl plugin
+  ansible.builtin.get_url:
+    # As of 11/30/2021 the only arch is amd64 for releases
+    url: "https://github.com/argoproj/argo-rollouts/releases/{{ argo_version }}/download/kubectl-argo-rollouts-{{ ansible_system | lower }}-amd64" #{{ kctl_arch[ansible_architecture] }}"
+    dest: /usr/local/bin/kubectl-argo-rollouts
+    mode: u=rwx,g=rx,o=rx
+    owner: "{{ kctl_user_id }}"
+    group: "{{ kctl_group_id }}"
+
+### User rc files
+- name: Configure user rc files for Argo
+  ansible.builtin.lineinfile:
+    path: "~{{ kctl_user_id }}/{{ item.value }}"
+    line: "source <(kubectl argo rollouts completion {{ item.key }})"
+    create: true
+    mode: u=rw,g=r,o=r
+    owner: "{{ kctl_user_id }}"
+    group: "{{ kctl_group_id }}"
+  with_dict:
+    bash: .bashrc
+    zsh: .zshrc.local

@@ -48,3 +48,7 @@ Author Information
 ------------------
 
 Chris Diehl
+
+## TODO
+* Clean up vars
+* Add Tanzu for other OS
