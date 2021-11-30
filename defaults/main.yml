@@ -3,6 +3,7 @@
 kubectl_version: 1.21.1
 kustomize_version: 4.4.0
 helm_version: 3.7.1
+arg_version: latest
 
 kctl_user_id: "{{ user_id }}"
 kctl_group_id: "{{ kctl_user_gid_by_os[ansible_system] }}"
