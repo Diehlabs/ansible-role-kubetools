@@ -1,13 +1,8 @@
 ---
-- name: Download helm binary (Linux amd64)
-  ansible.builtin.get_url:
-    url: "{{ helm_dl_url }}"
-    dest: /tmp
-
 - name: Extract Helm
   ansible.builtin.unarchive:
-    src: "/tmp/helm-v{{ helm_version }}-{{ ansible_system|lower }}-{{ kctl_arch[ansible_architecture] }}.tar.gz"
     remote_src: yes
+    src: "{{ helm_dl_url }}"
     dest: "{{ kctl_bin_path }}"
     extra_opts: [--strip-components=1]
     mode: u=rwx,g=rx,o=rx

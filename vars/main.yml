@@ -6,6 +6,11 @@ kubectl_dl_url: "https://storage.googleapis.com/kubernetes-release/release/v{{ k
 
 kustomize_dl_url: "https://github.com/kubernetes-sigs/kustomize/releases/download/kustomize%2Fv{{ kustomize_version }}/kustomize_v{{ kustomize_version }}_{{ ansible_system|lower }}_{{ kctl_arch[ansible_architecture] }}.tar.gz"
 
+# As of 11/30/2021 only amd64 is available for these binaries
+# tanzu_dl_url: https://github.com/vmware-tanzu/community-edition/releases/download/{{ tanzu_version }}/tce-windows-amd64-{{ tanzu_version }}.zip
+
+argo_dl_url: "https://github.com/argoproj/argo-rollouts/releases/{{ argo_version }}/download/kubectl-argo-rollouts-{{ ansible_system | lower }}-amd64"
+
 kctl_arch:
   x86_64: amd64
   aarch64: arm64
