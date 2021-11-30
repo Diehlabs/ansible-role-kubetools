@@ -12,9 +12,13 @@
   include_tasks: windows.yml
   when: ansible_system == 'Windows'
 
-- name: Install kubectl (OSX amd64)
+- name: Install Tanzu CLI
   include_tasks: tanzu.yml
-  when: ansible_system == 'Darwin' and kctl_tanzu == true
+  when: kctl_tanzu == true
+
+- name: Install Argo stuff
+  include_tasks: argo.yml
+  when: kctl_argo == true
 
 # add krew!
 # https://krew.sigs.k8s.io/docs/user-guide/setup/install/
