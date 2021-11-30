@@ -11,3 +11,5 @@
         name: "ansible-role-kubetools"
       vars:
         kctl_user_id: chris
+        # ktcl_tanzu: true
+        kctl_argo: true

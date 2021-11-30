@@ -13,3 +13,4 @@ kctl_bin_path: /usr/local/bin/
 kctl_kubeconfig_files:
   - admin.kubeconfig
 kctl_tanzu: false
+kctl_argo: false
