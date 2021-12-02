@@ -1,5 +1,5 @@
 ---
-- name: Download foo.conf
+- name: Download Helm archive
   get_url:
     url: "{{ helm_dl_url }}"
     dest: /tmp/helm.tar.gz
