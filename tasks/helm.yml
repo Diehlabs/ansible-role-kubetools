@@ -1,8 +1,16 @@
 ---
+- name: Download Helm archive
+  get_url:
+    url: "{{ helm_dl_url }}"
+    dest: /tmp/helm.tar.gz
+    mode: u=rw,g=rw,o=r
+    owner: "{{ kctl_user_id }}"
+    group: "{{ kctl_group_id }}"
+
 - name: Extract Helm
   ansible.builtin.unarchive:
     remote_src: yes
-    src: "{{ helm_dl_url }}"
+    src: /tmp/helm.tar.gz
     dest: "{{ kctl_bin_path }}"
     extra_opts: [--strip-components=1]
     mode: u=rwx,g=rx,o=rx
