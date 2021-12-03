@@ -19,10 +19,9 @@
   when: ansible_system == 'Linux'
 
 - name: Extract Helm with shell
-  ansible.builtin.shell:
-    cmd: |
-      "tar -xvf /tmp/helm.tar.gz -C {{ kctl_bin_path }}"
-      "chown {{ kctl_user_id }}:{{ kctl_group_id }} {{ kctl_bin_path }}"
+  ansible.builtin.shell: |
+    gtar -xvf /tmp/helm.tar.gz -C {{ kctl_bin_path }}
+    chown {{ kctl_user_id }}:{{ kctl_group_id }} {{ kctl_bin_path }}
     # mode: u=rwx,g=rx,o=rx
   when: ansible_system == 'Darwin'
 
