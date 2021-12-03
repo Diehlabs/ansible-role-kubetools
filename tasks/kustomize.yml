@@ -1,10 +1,37 @@
 ---
+# - name: Extract kustomize
+#   ansible.builtin.unarchive:
+#     remote_src: yes
+#     src: "{{ kustomize_dl_url }}"
+#     dest: "{{ kctl_bin_path }}"
+#     extra_opts: [--strip-components=1]
+#     mode: u=rwx,g=rx,o=rx
+#     owner: "{{ kctl_user_id }}"
+#     group: "{{ kctl_group_id }}"
+
+- name: Download kustomize archive
+  get_url:
+    url: "{{ kustomize_dl_url }}"
+    dest: /tmp/kustomize.tar.gz
+    mode: u=rw,g=rw,o=r
+    owner: "{{ kctl_user_id }}"
+    group: "{{ kctl_group_id }}"
+
 - name: Extract kustomize
   ansible.builtin.unarchive:
     remote_src: yes
-    src: "{{ kustomize_dl_url }}"
+    src: /tmp/kustomize.tar.gz
     dest: "{{ kctl_bin_path }}"
     extra_opts: [--strip-components=1]
     mode: u=rwx,g=rx,o=rx
     owner: "{{ kctl_user_id }}"
     group: "{{ kctl_group_id }}"
+  when: ansible_system == 'Linux'
+
+# Because gnu-tar isn't found in path on remote Mac systems in non-interactive shell, use cmd to extract instead
+- name: Extract kustomize with shell
+  ansible.builtin.shell: |
+    gtar -xvf /tmp/kustomize.tar.gz -C {{ kctl_bin_path }}
+    chown {{ kctl_user_id }}:{{ kctl_group_id }} {{ kctl_bin_path }}
+    # mode: u=rwx,g=rx,o=rx
+  when: ansible_system == 'Darwin'
