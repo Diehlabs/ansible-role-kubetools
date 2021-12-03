@@ -16,3 +16,12 @@
     mode: u=rwx,g=rx,o=rx
     owner: "{{ kctl_user_id }}"
     group: "{{ kctl_group_id }}"
+  when: ansible_system == 'Linux'
+
+# Because gnu-tar isn't found in path on remote Mac systems in non-interactive shell, use cmd to extract instead
+- name: Extract Helm with shell
+  ansible.builtin.shell: |
+    gtar -xvf /tmp/helm.tar.gz -C {{ kctl_bin_path }}
+    chown {{ kctl_user_id }}:{{ kctl_group_id }} {{ kctl_bin_path }}
+    # mode: u=rwx,g=rx,o=rx
+  when: ansible_system == 'Darwin'
