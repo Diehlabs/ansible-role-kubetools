@@ -8,10 +8,10 @@
     group: "{{ kctl_group_id }}"
 
 - name: Install helm
-  include: helm.yml
+  include_tasks: helm.yml
 
 - name: Install kustomize
-  include: kustomize.yml
+  include_tasks: kustomize.yml
 
 ### User rc files
 - name: Configure .bashrc for kubectl
