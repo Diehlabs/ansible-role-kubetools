@@ -10,6 +10,6 @@
       include_role:
         name: "ansible-role-kubetools"
       vars:
-        kctl_user_id: chris
+        kubetools_user_id: chris
         # ktcl_tanzu: true
-        kctl_argo: true
+        kubetools_argo: true

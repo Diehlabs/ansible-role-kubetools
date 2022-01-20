@@ -1,27 +1,27 @@
 ---
 # vars file for kubectl
-helm_dl_url: "https://get.helm.sh/helm-v{{ helm_version }}-{{ ansible_system|lower }}-{{ kctl_arch[ansible_architecture] }}.tar.gz"
+kubetools_helm_dl_url: "https://get.helm.sh/helm-v{{ kubetools_helm_version }}-{{ ansible_system|lower }}-{{ kubetools_arch[ansible_architecture] }}.tar.gz"
 
-kubectl_dl_url: "https://storage.googleapis.com/kubernetes-release/release/v{{ kubectl_version }}/bin/{{ ansible_system|lower }}/{{ kctl_arch[ansible_architecture] }}/kubectl"
+kubetools_kubectl_dl_url: "https://storage.googleapis.com/kubernetes-release/release/v{{ kubetools_kubectl_version }}/bin/{{ ansible_system|lower }}/{{ kubetools_arch[ansible_architecture] }}/kubectl"
 
-kustomize_dl_url: "https://github.com/kubernetes-sigs/kustomize/releases/download/kustomize%2Fv{{ kustomize_version }}/kustomize_v{{ kustomize_version }}_{{ ansible_system|lower }}_{{ kctl_arch[ansible_architecture] }}.tar.gz"
+kubetools_kustomize_dl_url: "https://github.com/kubernetes-sigs/kustomize/releases/download/kustomize%2Fv{{ kubetools_kustomize_version }}/kustomize_v{{ kubetools_kustomize_version }}_{{ ansible_system|lower }}_{{ kubetools_arch[ansible_architecture] }}.tar.gz"
 
 # As of 11/30/2021 only amd64 is available for these binaries
-# tanzu_dl_url: https://github.com/vmware-tanzu/community-edition/releases/download/{{ tanzu_version }}/tce-windows-amd64-{{ tanzu_version }}.zip
+# tanzu_dl_url: https://github.com/vmware-tanzu/community-edition/releases/download/{{ kubetools_tanzu_version }}/tce-windows-amd64-{{ kubetools_tanzu_version }}.zip
 
-argo_dl_url: "https://github.com/argoproj/argo-rollouts/releases/{{ argo_version }}/download/kubectl-argo-rollouts-{{ ansible_system | lower }}-amd64"
+kubetools_argo_dl_url: "https://github.com/argoproj/argo-rollouts/releases/download/{{ kubetools_argo_version }}/kubectl-argo-rollouts-{{ ansible_system | lower }}-amd64"
 
-kctl_arch:
+kubetools_arch:
   x86_64: amd64
   aarch64: arm64
   arm64: arm64
 
-kctl_user_gid_by_os:
-  Darwin: staff
-  Linux: "{{ kctl_user_id }}"
+kubetools_user_gid_by_os:
+  Darwin: admin
+  Linux: "{{ kubetools_user_id }}"
   Windows: Users
 
-# kctl_admin_group_by_os:
+# kubetools_admin_group_by_os:
 #   Darwin: wheel
 #   Linux: root
 #   Windows: Administrators

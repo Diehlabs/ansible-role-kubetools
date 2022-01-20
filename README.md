@@ -12,16 +12,16 @@ Any pre-requisites that may not be covered by Ansible itself or the role should 
 Role Variables
 --------------
 
-kubectl_version: 1.21.1 (Default)
-kustomize_version: 4.0.0 (Default)
-helm_version: 3.7.1 (Default)
+kubetools_kubectl_version: 1.21.1 (Default)
+kubetools_kustomize_version: 4.0.0 (Default)
+kubetools_helm_version: 3.7.1 (Default)
 
-kctl_user_id: chris
-kctl_group_id: chris (Default: "{{ kctl_user_id }}")
-kctl_shell_type: zsh (Default)
-kctl_bin_dir_win: c:\windows (Default)
-kctl_config_source_dir: "/home/{{ kctl_user_id }}/k8s-config"
-kctl_kubeconfig_files:
+kubetools_user_id: chris
+kubetools_group_id: chris (Default: "{{ kubetools_user_id }}")
+kubetools_shell_type: zsh (Default)
+kubetools_bin_dir_win: c:\windows (Default)
+kubetools_config_source_dir: "/home/{{ kubetools_user_id }}/k8s-config"
+kubetools_kubeconfig_files:
   - admin.kubeconfig (Default)
 
 
@@ -37,7 +37,7 @@ Including an example of how to use your role (for instance, with variables passe
 
     - hosts: servers
       roles:
-         - { role: kubetools, kctl_user: chris }
+         - { role: kubetools, kubetools_user: chris }
 
 License
 -------

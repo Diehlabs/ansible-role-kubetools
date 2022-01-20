@@ -1,27 +1,27 @@
 ---
 - name: Download Helm archive
   get_url:
-    url: "{{ helm_dl_url }}"
+    url: "{{ kubetools_helm_dl_url }}"
     dest: /tmp/helm.tar.gz
     mode: u=rw,g=rw,o=r
-    owner: "{{ kctl_user_id }}"
-    group: "{{ kctl_group_id }}"
+    owner: "{{ kubetools_user_id }}"
+    group: "{{ kubetools_group_id }}"
 
 - name: Extract Helm
   ansible.builtin.unarchive:
     remote_src: yes
     src: /tmp/helm.tar.gz
-    dest: "{{ kctl_bin_path }}"
+    dest: "{{ kubetools_bin_path }}"
     extra_opts: [--strip-components=1]
     mode: u=rwx,g=rx,o=rx
-    owner: "{{ kctl_user_id }}"
-    group: "{{ kctl_group_id }}"
+    owner: "{{ kubetools_user_id }}"
+    group: "{{ kubetools_group_id }}"
   when: ansible_system == 'Linux'
 
 # Because gnu-tar isn't found in path on remote Mac systems in non-interactive shell, use cmd to extract instead
 - name: Extract Helm with shell
   ansible.builtin.shell: |
-    gtar -xvf /tmp/helm.tar.gz -C {{ kctl_bin_path }}
-    chown {{ kctl_user_id }}:{{ kctl_group_id }} {{ kctl_bin_path }}
+    gtar -xvf /tmp/helm.tar.gz -C {{ kubetools_bin_path }}
+    chown {{ kubetools_user_id }}:{{ kubetools_group_id }} {{ kubetools_bin_path }}
     # mode: u=rwx,g=rx,o=rx
   when: ansible_system == 'Darwin'

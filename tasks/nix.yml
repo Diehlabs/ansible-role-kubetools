@@ -1,41 +1,52 @@
 ---
-- name: Download kubectl binary (Linux amd64)
+# installs
+- name: "Download kubectl binary ({{ ansible_system|lower }} {{ kubetools_arch[ansible_architecture] }})"
   ansible.builtin.get_url:
-    url: "{{ kctl_kubectl_dl_url }}"
-    dest: "{{ kctl_bin_path }}"
+    url: "{{ kubetools_kubectl_dl_url }}"
+    dest: "{{ kubetools_bin_path }}"
     mode: u=rwx,g=rx,o=rx
-    owner: "{{ kctl_user_id }}"
-    group: "{{ kctl_group_id }}"
+    owner: "{{ kubetools_user_id }}"
+    group: "{{ kubetools_group_id }}"
 
 - name: Install helm
   include_tasks: helm.yml
+  when: kubetools_helm_version is defined
 
 - name: Install kustomize
   include_tasks: kustomize.yml
+  when: kubetools_kustomize_version is defined
+
+- name: Install Tanzu CLI
+  include_tasks: tanzu.yml
+  when: kubetools_tanzu_install == true
+
+- name: Install Argo stuff
+  include_tasks: argo.yml
+  when: kubetools_argo_version is defined
 
 ### User rc files
 - name: Configure .bashrc for kubectl
   ansible.builtin.lineinfile:
-    path: "~{{ kctl_user_id }}/.bashrc"
+    path: "~{{ kubetools_user_id }}/.bashrc"
     line: "{{ item }}"
     regexp: "^{{ item.split('=')[0] }}="
     create: true
     mode: u=rw,g=r,o=r
-    owner: "{{ kctl_user_id }}"
-    group: "{{ kctl_group_id }}"
+    owner: "{{ kubetools_user_id }}"
+    group: "{{ kubetools_group_id }}"
   loop:
     - 'alias k=kubectl'
     - 'export do="-o yaml --dry-run=client"'
 
 - name: Configure .zshrc.local for kubectl
   ansible.builtin.lineinfile:
-    path: "~{{ kctl_user_id }}/.zshrc.local"
+    path: "~{{ kubetools_user_id }}/.zshrc.local"
     line: "{{ item }}"
     regexp: "^{{ item.split('=')[0] }}="
     create: true
     mode: u=rw,g=r,o=r
-    owner: "{{ kctl_user_id }}"
-    group: "{{ kctl_group_id }}"
+    owner: "{{ kubetools_user_id }}"
+    group: "{{ kubetools_group_id }}"
   loop:
     - 'alias k=kubectl'
     - 'export o="-o yaml"'
@@ -43,36 +54,36 @@
 
 - name: Configure bash autocomplete for kubectl
   ansible.builtin.lineinfile:
-    path: "~{{ kctl_user_id }}/.bashrc"
+    path: "~{{ kubetools_user_id }}/.bashrc"
     line: "{{ item }}"
     create: true
     mode: u=rw,g=r,o=r
-    owner: "{{ kctl_user_id }}"
-    group: "{{ kctl_group_id }}"
+    owner: "{{ kubetools_user_id }}"
+    group: "{{ kubetools_group_id }}"
   loop:
     - 'source <(kubectl completion bash)'
     - 'complete -F __start_kubectl k'
 
 - name: Configure zshell autocomplete for kubectl
   ansible.builtin.lineinfile:
-    path: "~{{ kctl_user_id }}/.zshrc.local"
+    path: "~{{ kubetools_user_id }}/.zshrc.local"
     line: "{{ item }}"
     create: true
     mode: u=rw,g=r,o=r
-    owner: "{{ kctl_user_id }}"
-    group: "{{ kctl_group_id }}"
+    owner: "{{ kubetools_user_id }}"
+    group: "{{ kubetools_group_id }}"
   loop:
     - '[[ $commands[kubectl] ]] && source <(kubectl completion zsh)'
-  when: kctl_shell_type == 'zsh'
+  when: kubetools_shell_type == 'zsh'
 
 - name: Configure vimrc for kube usage
   ansible.builtin.lineinfile:
-    path: "~{{ kctl_user_id }}/.vimrc"
+    path: "~{{ kubetools_user_id }}/.vimrc"
     line: "{{ item }}"
     create: true
     mode: u=rw,g=r,o=r
-    owner: "{{ kctl_user_id }}"
-    group: "{{ kctl_group_id }}"
+    owner: "{{ kubetools_user_id }}"
+    group: "{{ kubetools_group_id }}"
   loop:
     - 'set expandtab'
     - 'set tabstop=2'
