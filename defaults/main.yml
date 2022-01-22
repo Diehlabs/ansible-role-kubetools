@@ -9,8 +9,12 @@ kubetools_user_id: "{{ user_id }}"
 kubetools_group_id: "{{ kubetools_user_gid_by_os[ansible_system] }}"
 kubetools_shell_type: zsh
 kubetools_bin_dir_win: c:\windows
-kubetools_config_source_dir: # ~/k8s-config
+kubetools_config_source_dir: "~{{ kubetools_user_id }}/.kube"
 kubetools_bin_path: /usr/local/bin/
-kubetools_kubeconfig_files:
-  - admin.kubeconfig
 kubetools_tanzu_install: false
+
+# kubetools_kube_conf_files:
+#   config: <raw contents>
+#   prod_cluster: <raw contents>
+#   dev_cluster: <raw contents>
+#   etc...
