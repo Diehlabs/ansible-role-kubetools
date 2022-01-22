@@ -9,9 +9,9 @@ jobs:
 
       - name: Lint Ansible Role
         uses: ansible/ansible-lint-action@master
-        # with:
-        #   targets:
-        #     tests/test.yml
+        with:
+          targets:
+            tests/test.yml
 
 # name: Ansible Test
 # on: [push, pull_request]
