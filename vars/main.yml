@@ -11,17 +11,12 @@ kubetools_kustomize_dl_url: "https://github.com/kubernetes-sigs/kustomize/releas
 
 kubetools_argo_dl_url: "https://github.com/argoproj/argo-rollouts/releases/download/{{ kubetools_argo_version }}/kubectl-argo-rollouts-{{ ansible_system | lower }}-amd64"
 
-kubetools_arch:
-  x86_64: amd64
-  aarch64: arm64
-  arm64: arm64
-
 kubetools_user_gid_by_os:
   Darwin: admin
   Linux: "{{ kubetools_user_id }}"
   Windows: Users
 
-# kubetools_admin_group_by_os:
-#   Darwin: wheel
-#   Linux: root
-#   Windows: Administrators
+kubetools_arch:
+  x86_64: amd64
+  aarch64: arm64
+  arm64: arm64

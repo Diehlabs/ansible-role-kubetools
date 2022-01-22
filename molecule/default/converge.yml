@@ -11,5 +11,6 @@
         name: "ansible-role-kubetools"
       vars:
         kubetools_user_id: chris
-        # ktcl_tanzu: true
         kubetools_argo: true
+        kubetools_kube_conf_files:
+          config: "my default kube config file"

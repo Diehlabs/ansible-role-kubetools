@@ -1,0 +1,78 @@
+---
+- name: "Download kubectl binary ({{ ansible_system|lower }} {{ kubetools_arch[ansible_architecture] }})"
+  ansible.builtin.get_url:
+    url: "{{ kubetools_kubectl_dl_url }}"
+    dest: "{{ kubetools_bin_path }}"
+    mode: u=rwx,g=rx,o=rx
+    owner: "{{ kubetools_user_id }}"
+    group: "{{ kubetools_group_id }}"
+
+# kube config
+- name: Ensure kubeconfig folder exists
+  ansible.builtin.file:
+    state: directory
+    path: "{{ kubetools_config_source_dir }}"
+    mode: u=rwx,g=rx
+    owner: "{{ kubetools_user_id }}"
+    group: "{{ kubetools_group_id }}"
+
+- name: Write kube config files
+  ansible.builtin.copy:
+    dest: "{{ kubetools_config_source_dir }}/{{ item.key }}"
+    content: "{{ item.value }}"
+    mode: u=rw
+    owner: "{{ kubetools_user_id }}"
+    group: "{{ kubetools_group_id }}"
+  with_dict: "{{ kubetools_kube_conf_files }}"
+
+### User rc files
+- name: Configure .bashrc for kubectl
+  ansible.builtin.lineinfile:
+    path: "~{{ kubetools_user_id }}/.bashrc"
+    line: "{{ item }}"
+    regexp: "^{{ item.split('=')[0] }}="
+    create: true
+    mode: u=rw,g=r,o=r
+    owner: "{{ kubetools_user_id }}"
+    group: "{{ kubetools_group_id }}"
+  loop:
+    - 'alias k=kubectl'
+    - 'export do="-o yaml --dry-run=client"'
+
+- name: Configure .zshrc.local for kubectl
+  ansible.builtin.lineinfile:
+    path: "~{{ kubetools_user_id }}/.zshrc.local"
+    line: "{{ item }}"
+    regexp: "^{{ item.split('=')[0] }}="
+    create: true
+    mode: u=rw,g=r,o=r
+    owner: "{{ kubetools_user_id }}"
+    group: "{{ kubetools_group_id }}"
+  loop:
+    - 'alias k=kubectl'
+    - 'export o="-o yaml"'
+    - 'export d="--dry-run=client"'
+
+- name: Configure bash autocomplete for kubectl
+  ansible.builtin.lineinfile:
+    path: "~{{ kubetools_user_id }}/.bashrc"
+    line: "{{ item }}"
+    create: true
+    mode: u=rw,g=r,o=r
+    owner: "{{ kubetools_user_id }}"
+    group: "{{ kubetools_group_id }}"
+  loop:
+    - 'source <(kubectl completion bash)'
+    - 'complete -F __start_kubectl k'
+
+- name: Configure zshell autocomplete for kubectl
+  ansible.builtin.lineinfile:
+    path: "~{{ kubetools_user_id }}/.zshrc.local"
+    line: "{{ item }}"
+    create: true
+    mode: u=rw,g=r,o=r
+    owner: "{{ kubetools_user_id }}"
+    group: "{{ kubetools_group_id }}"
+  loop:
+    - '[[ $commands[kubectl] ]] && source <(kubectl completion zsh)'
+  when: kubetools_shell_type == 'zsh'
