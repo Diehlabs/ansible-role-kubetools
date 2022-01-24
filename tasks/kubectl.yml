@@ -24,6 +24,7 @@
     owner: "{{ kubetools_user_id }}"
     group: "{{ kubetools_group_id }}"
   with_dict: "{{ kubetools_kube_conf_files }}"
+  when: kubetools_kube_conf_files is defined
 
 ### User rc files
 - name: Configure .bashrc for kubectl
