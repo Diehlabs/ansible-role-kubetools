@@ -28,22 +28,21 @@
 
 ### User rc files
 - name: Configure .bashrc for kubectl
-  ansible.builtin.lineinfile:
+  ansible.builtin.blockinfile:
     path: "~{{ kubetools_user_id }}/.bashrc"
-    line: "{{ item }}"
-    regexp: "^{{ item.split('=')[0] }}="
     create: true
     mode: u=rw,g=r,o=r
     owner: "{{ kubetools_user_id }}"
     group: "{{ kubetools_group_id }}"
-  loop:
-    - 'alias k=kubectl'
-    - 'export do="-o yaml --dry-run=client"'
+    marker: "# {mark} ANSIBLE MANAGED BLOCK {{ kubetools_managed_by }}"
+    block: |
+      alias k=kubectl
+      export do="-o yaml --dry-run=client"
 
 - name: Configure .zshrc.local for kubectl
   ansible.builtin.lineinfile:
     path: "~{{ kubetools_user_id }}/.zshrc.local"
-    line: "{{ item }}"
+    line: "{{ item }} {{ kubetools_managed_by }}"
     regexp: "^{{ item.split('=')[0] }}="
     create: true
     mode: u=rw,g=r,o=r
@@ -57,7 +56,7 @@
 - name: Configure bash autocomplete for kubectl
   ansible.builtin.lineinfile:
     path: "~{{ kubetools_user_id }}/.bashrc"
-    line: "{{ item }}"
+    line: "{{ item }} {{ kubetools_managed_by }}"
     create: true
     mode: u=rw,g=r,o=r
     owner: "{{ kubetools_user_id }}"
@@ -69,7 +68,7 @@
 - name: Configure zshell autocomplete for kubectl
   ansible.builtin.lineinfile:
     path: "~{{ kubetools_user_id }}/.zshrc.local"
-    line: "{{ item }}"
+    line: "{{ item }} {{ kubetools_managed_by }}"
     create: true
     mode: u=rw,g=r,o=r
     owner: "{{ kubetools_user_id }}"

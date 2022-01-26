@@ -4,7 +4,7 @@
     # As of 11/30/2021 the only arch is amd64 for releases
     url: "{{ kubetools_argo_dl_url }}"
     dest: /usr/local/bin/kubectl-argo-rollouts
-    mode: u=rwx,g=rx,o=rx
+    mode: u=rwx,g=rwx,o=rx
     owner: "{{ kubetools_user_id }}"
     group: "{{ kubetools_group_id }}"
 
@@ -12,7 +12,7 @@
 - name: Configure user rc files for Argo
   ansible.builtin.lineinfile:
     path: "~{{ kubetools_user_id }}/{{ item.value }}"
-    line: "source <(kubectl argo rollouts completion {{ item.key }})"
+    line: "source <(kubectl argo rollouts completion {{ item.key }}) {{ kubetools_managed_by }}"
     create: true
     mode: u=rw,g=r,o=r
     owner: "{{ kubetools_user_id }}"

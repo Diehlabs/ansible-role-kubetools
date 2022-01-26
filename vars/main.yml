@@ -20,3 +20,5 @@ kubetools_arch:
   x86_64: amd64
   aarch64: arm64
   arm64: arm64
+
+kubetools_managed_by: "# Managed by Ansible role ansible-role-kubetools"

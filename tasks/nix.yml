@@ -22,7 +22,7 @@
 - name: Configure vimrc for kube usage
   ansible.builtin.lineinfile:
     path: "~{{ kubetools_user_id }}/.vimrc"
-    line: "{{ item }}"
+    line: "{{ item }} {{ kubetools_managed_by }}"
     create: true
     mode: u=rw,g=r,o=r
     owner: "{{ kubetools_user_id }}"
