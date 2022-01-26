@@ -19,10 +19,11 @@
   include_tasks: argo.yml
   when: kubetools_argo_version is defined
 
+# Not appending {{kubetools_managed_by}} since vim doesn't like the comments on the lines
 - name: Configure vimrc for kube usage
   ansible.builtin.lineinfile:
     path: "~{{ kubetools_user_id }}/.vimrc"
-    line: "{{ item }} {{ kubetools_managed_by }}"
+    line: "{{ item }}"
     create: true
     mode: u=rw,g=r,o=r
     owner: "{{ kubetools_user_id }}"
