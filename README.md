@@ -12,18 +12,28 @@ Any pre-requisites that may not be covered by Ansible itself or the role should 
 Role Variables
 --------------
 
-kubetools_kubectl_version: 1.21.1 (Default)
-kubetools_kustomize_version: 4.0.0 (Default)
-kubetools_helm_version: 3.7.1 (Default)
+| Variable name | Description | Example value or default if optional | Required? |
+|---|---|---|---|
+kubetools_kubectl_version | Version of kubectl to install | 1.21.1 | YES |
+kubetools_kustomize_version | Version of kustomize to install | 4.4.0 | no |
+kubetools_helm_version | Version of helm to install | 3.7.1 | no |
+kubetools_argo_version | Version of argo to install | 1.1.1 | no |
+kubetools_user_id | The user ID to configure kubetools for | "{{ user_id }}" | YES |
+kubetools_group_id | Name of the local group to configure kubetools for | "{{ kubetools_user_gid_by_os[ansible_system] }}" | no |
+kubetools_shell_type | Shell that the kubetools_user_id user will use | zsh | no |
+kubetools_bin_dir_win | Used for Windows, role not ready for Windows | c:\windows | maybe |
+kubetools_config_source_dir | Folder to write kube config files to, if supllied | "~{{ kubetools_user_id }}/.kube" | no |
+kubetools_bin_path | Path to store downloaded binaries in | /usr/local/bin/ | no |
+kubetools_tanzu_install | Install Tanzu CLI | false | no |
+kubetools_kube_conf_files | Dict of file_name=>file_contents of kube config files to manage | see yaml example below | no |
 
-kubetools_user_id: chris
-kubetools_group_id: chris (Default: "{{ kubetools_user_id }}")
-kubetools_shell_type: zsh (Default)
-kubetools_bin_dir_win: c:\windows (Default)
-kubetools_config_source_dir: "/home/{{ kubetools_user_id }}/k8s-config"
-kubetools_kubeconfig_files:
-  - admin.kubeconfig (Default)
-
+```yaml
+kubetools_kube_conf_files:
+  config: <raw contents>
+  prod_cluster: <raw contents>
+  dev_cluster: <raw contents>
+  etc...
+```
 
 Dependencies
 ------------
