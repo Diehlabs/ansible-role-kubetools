@@ -25,3 +25,4 @@
     chown {{ kubetools_user_id }}:{{ kubetools_group_id }} {{ kubetools_bin_path }}
     # mode: u=rwx,g=rx,o=rx
   when: ansible_system == 'Darwin'
+  changed_when: False
