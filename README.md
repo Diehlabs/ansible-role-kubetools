@@ -57,8 +57,4 @@ MIT
 Author Information
 ------------------
 
-Chris Diehl
-
-## TODO
-* Clean up vars
-* Add Tanzu for other OS
+[Chris Diehl](https://www.linkedin.com/in/chrisdiehl817/)
