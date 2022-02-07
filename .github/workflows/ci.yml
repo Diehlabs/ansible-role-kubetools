@@ -3,5 +3,5 @@ name: Ansible CI
 on: [push, pull_request]
 
 jobs:
-  job:
+  tests:
     uses: Diehlabs/shared-workflows/.github/workflows/ansible-ci.yml@v0.0.1
