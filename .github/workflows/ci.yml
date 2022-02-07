@@ -1,12 +1,6 @@
 name: Ansible Release
-on:
-  workflow_run:
-    workflows:
-      - 'Ansible Test'
-    branches:
-      - main
-    types:
-      - completed
+
+on: [push, pull_request]
 
 jobs:
   job1:
