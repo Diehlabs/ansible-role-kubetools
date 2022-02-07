@@ -38,4 +38,4 @@
     chown {{ kubetools_user_id }}:{{ kubetools_group_id }} {{ kubetools_bin_path }}
     # mode: u=rwx,g=rx,o=rx
   changed_when: False
-  when: ansible_system == 'Darwin' and helm_download is changed
+  when: ansible_system == 'Darwin' and helm_downloaded is changed
