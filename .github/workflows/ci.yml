@@ -3,5 +3,10 @@ name: Ansible CI
 on: [push, pull_request]
 
 jobs:
-  tests:
+  default:
     uses: Diehlabs/shared-workflows/.github/workflows/ansible-ci.yml@v0.0.1
+
+  all_vars:
+    uses: Diehlabs/shared-workflows/.github/workflows/ansible-ci.yml@v0.0.1
+    with:
+      scenario: all_vars

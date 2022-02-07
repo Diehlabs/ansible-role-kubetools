@@ -1,0 +1,14 @@
+---
+- name: Converge
+  hosts: all
+  tasks:
+    - name: "Include kubetools"
+      include_role:
+        name: "ansible-role-kubetools"
+      vars:
+        kubetools_user_id: chris
+        kubetools_kube_conf_files:
+          config: "my default kube config file faux contents"
+        kubetools_kustomize_version: 4.4.0
+        kubetools_helm_version: 3.7.1
+        kubetools_argo_version: 1.1.1
