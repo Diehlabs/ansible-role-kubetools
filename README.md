@@ -21,7 +21,6 @@ kubetools_argo_version | Version of argo to install | 1.1.1 | no |
 kubetools_user_id | The user ID to configure kubetools for | "{{ user_id }}" | YES |
 kubetools_group_id | Name of the local group to configure kubetools for | "{{ kubetools_user_gid_by_os[ansible_system] }}" | no |
 kubetools_shell_type | Shell that the kubetools_user_id user will use | zsh | no |
-kubetools_bin_dir_win | Used for Windows, role not ready for Windows | c:\windows | maybe |
 kubetools_config_source_dir | Folder to write kube config files to, if supllied | "~{{ kubetools_user_id }}/.kube" | no |
 kubetools_bin_path | Path to store downloaded binaries in | /usr/local/bin/ | no |
 kubetools_tanzu_install | Install Tanzu CLI | false | no |

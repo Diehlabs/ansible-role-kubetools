@@ -9,6 +9,17 @@
 #     owner: "{{ kubetools_user_id }}"
 #     group: "{{ kubetools_group_id }}"
 
+- name: Verify Kustomize binary
+  stat:
+    path: "{{ kubetools_kustomize_bin_path }}"
+  register: kustomize_binary
+
+- name: Verify Kustomize version
+  command: "{{ kubetools_kustomize_bin_path }} version"
+  failed_when: false
+  changed_when: false
+  register: kustomize_version
+
 - name: Download kustomize archive
   get_url:
     url: "{{ kubetools_kustomize_dl_url }}"
@@ -16,6 +27,8 @@
     mode: u=rw,g=rw,o=r
     owner: "{{ kubetools_user_id }}"
     group: "{{ kubetools_group_id }}"
+  register: kustomize_downloaded
+  when: not kustomize_binary.stat.exists or kubetools_kustomize_version not in kustomize_version.stdout
 
 - name: Extract kustomize
   ansible.builtin.unarchive:
@@ -26,7 +39,7 @@
     mode: u=rwx,g=rx,o=rx
     owner: "{{ kubetools_user_id }}"
     group: "{{ kubetools_group_id }}"
-  when: ansible_system == 'Linux'
+  when: ansible_system == 'Linux' and kustomize_downloaded is changed
 
 # Because gnu-tar isn't found in path on remote Mac systems in non-interactive shell, use cmd to extract instead
 - name: Extract kustomize with shell
@@ -34,5 +47,5 @@
     gtar -xvf /tmp/kustomize.tar.gz -C {{ kubetools_bin_path }}
     chown {{ kubetools_user_id }}:{{ kubetools_group_id }} {{ kubetools_bin_path }}
     # mode: u=rwx,g=rx,o=rx
-  when: ansible_system == 'Darwin'
+  when: ansible_system == 'Darwin' and kustomize_downloaded is changed
   changed_when: False

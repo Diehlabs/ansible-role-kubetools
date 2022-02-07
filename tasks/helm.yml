@@ -1,11 +1,11 @@
 ---
 - name: Verify Helm binary
   stat:
-    path: "{{ kubetools_bin_path }}"
+    path: "{{ kubetools_helm_bin_path }}"
   register: helm_binary
 
 - name: Verify Helm version
-  command: "{{ kubetools_bin_path }} version"
+  command: "{{ kubetools_helm_bin_path }} version"
   failed_when: false
   changed_when: false
   register: helm_version
@@ -18,9 +18,7 @@
     owner: "{{ kubetools_user_id }}"
     group: "{{ kubetools_group_id }}"
   register: helm_downloaded
-  when: >
-    not helm_binary.stat.exists
-    or kubetools_helm_version not in helm_version.stdout
+  when: not helm_binary.stat.exists or kubetools_helm_version not in helm_version.stdout
 
 - name: Extract Helm
   ansible.builtin.unarchive:
@@ -31,9 +29,7 @@
     mode: u=rwx,g=rx,o=rx
     owner: "{{ kubetools_user_id }}"
     group: "{{ kubetools_group_id }}"
-  when: >
-    ansible_system == 'Linux'
-    and helm_download is changed
+  when: ansible_system == 'Linux' and helm_downloaded is changed
 
 # Because gnu-tar isn't found in path on remote Mac systems in non-interactive shell, use cmd to extract instead
 - name: Extract Helm with shell
@@ -42,6 +38,4 @@
     chown {{ kubetools_user_id }}:{{ kubetools_group_id }} {{ kubetools_bin_path }}
     # mode: u=rwx,g=rx,o=rx
   changed_when: False
-  when: >
-    ansible_system == 'Darwin'
-    and helm_download is changed
+  when: ansible_system == 'Darwin' and helm_download is changed

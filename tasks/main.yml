@@ -1,16 +1,38 @@
 ---
 # tasks file for kubectl
 
-# add helm repo helm3 repo add stable https://kubernetes-charts.storage.googleapis.com
-# add helm symlink?
-
-- name: Linux & OSX common tasks
-  include_tasks: nix.yml
-  when: ansible_system != 'Windows'
-
-- name: Install kubectl (Windows amd64)
-  include_tasks: windows.yml
-  when: ansible_system == 'Windows'
-
 # add krew!
 # https://krew.sigs.k8s.io/docs/user-guide/setup/install/
+
+- name: Install kubectl
+  include_tasks: kubectl.yml
+
+- name: Install helm
+  include_tasks: helm.yml
+  when: kubetools_helm_version is defined
+
+- name: Install kustomize
+  include_tasks: kustomize.yml
+  when: kubetools_kustomize_version is defined
+
+- name: Install Argo rollouts
+  include_tasks: argo.yml
+  when: kubetools_argo_version is defined
+
+- name: Install Tanzu CLI
+  include_tasks: tanzu.yml
+  when: kubetools_tanzu_install == true
+
+# Not appending {{kubetools_managed_by}} since vim doesn't like the comments on the lines
+- name: Configure vimrc for kube usage
+  ansible.builtin.lineinfile:
+    path: "~{{ kubetools_user_id }}/.vimrc"
+    line: "{{ item }}"
+    create: true
+    mode: u=rw,g=r,o=r
+    owner: "{{ kubetools_user_id }}"
+    group: "{{ kubetools_group_id }}"
+  loop:
+    - 'set expandtab'
+    - 'set tabstop=2'
+    - 'set shiftwidth=2'
