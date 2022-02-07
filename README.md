@@ -1,5 +1,5 @@
 # ansible-role-kubetools
-[![Ansible CI](https://github.com/Diehlabs/ansible-role-kubetools/actions/workflows/ansible-ci.yml/badge.svg)](https://github.com/Diehlabs/ansible-role-kubetools/actions/workflows/ansible-ci.yml)
+[![Ansible CI](https://github.com/Diehlabs/ansible-role-kubetools/actions/workflows/ci.yml/badge.svg)](https://github.com/Diehlabs/ansible-role-kubetools/actions/workflows/ci.yml)
 =========
 
 Installs and configures kubectl, helm, etc.
