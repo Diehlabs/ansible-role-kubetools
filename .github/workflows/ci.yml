@@ -1,7 +1,7 @@
-name: Ansible Release
+name: Ansible CI
 
 on: [push, pull_request]
 
 jobs:
-  job1:
+  job:
     uses: Diehlabs/shared-workflows/.github/workflows/ansible-ci.yml@v0.0.1
