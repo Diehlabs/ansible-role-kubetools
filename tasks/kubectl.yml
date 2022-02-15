@@ -47,13 +47,13 @@
     mode: u=rw,g=r,o=r
     owner: "{{ kubetools_user_id }}"
     group: "{{ kubetools_group_id }}"
-    marker: "# {mark} ANSIBLE MANAGED BLOCK {{ kubetools_managed_by }}"
+    marker: "# {mark} ------------------ {{ kubetools_managed_by }}"
     block: |
       alias k=kubectl
       export do="-o=yaml --dry-run=client"
-    loop:
-      - ".bashrc"
-      - ".zshenv"
+  loop:
+    - ".bash_profile"
+    - ".zshenv"
 
 - name: Configure bash autocomplete for kubectl
   ansible.builtin.lineinfile:
