@@ -40,31 +40,20 @@
   when: kubetools_kube_conf_files is defined
 
 ### User rc files
-- name: Configure .bashrc for kubectl
+- name: Configure dot files for kubectl
   ansible.builtin.blockinfile:
-    path: "~{{ kubetools_user_id }}/.bashrc"
+    path: "~{{ kubetools_user_id }}/{{ item }}"
     create: true
     mode: u=rw,g=r,o=r
     owner: "{{ kubetools_user_id }}"
     group: "{{ kubetools_group_id }}"
-    marker: "# {mark} ANSIBLE MANAGED BLOCK {{ kubetools_managed_by }}"
+    marker: "# {mark} ------------------ {{ kubetools_managed_by }}"
     block: |
       alias k=kubectl
-      export do="-o yaml --dry-run=client"
-
-- name: Configure .zshrc.local for kubectl
-  ansible.builtin.lineinfile:
-    path: "~{{ kubetools_user_id }}/.zshrc.local"
-    line: "{{ item }} {{ kubetools_managed_by }}"
-    regexp: "^{{ item.split('=')[0] }}="
-    create: true
-    mode: u=rw,g=r,o=r
-    owner: "{{ kubetools_user_id }}"
-    group: "{{ kubetools_group_id }}"
+      export do="-o=yaml --dry-run=client"
   loop:
-    - 'alias k=kubectl'
-    - 'export o=-o yaml'
-    - 'export d=--dry-run=client'
+    - ".bash_profile"
+    - ".zshenv"
 
 - name: Configure bash autocomplete for kubectl
   ansible.builtin.lineinfile:
