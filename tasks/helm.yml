@@ -21,7 +21,7 @@
 # Because gnu-tar isn't found in path on remote Mac systems in non-interactive shell, use cmd to extract instead
 - name: Extract Helm with shell
   ansible.builtin.shell: |
-    gtar -xvf /tmp/helm.tar.gz -C {{ kubetools_bin_path }}
+    gtar --strip-components=1 -xvf /tmp/helm.tar.gz -C {{ kubetools_bin_path }}
     chown {{ kubetools_user_id }}:{{ kubetools_group_id }} {{ kubetools_bin_path }}
     # mode: u=rwx,g=rx,o=rx
   when: ansible_system == 'Darwin'
