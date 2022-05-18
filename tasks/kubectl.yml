@@ -1,4 +1,15 @@
 ---
+- name: Verify kubectl binary
+  stat:
+    path: "{{ kubetools_kubectl_bin_path }}"
+  register: kubectl_binary
+
+- name: Verify kubectl version
+  command: "{{ kubetools_kubectl_bin_path }} version"
+  failed_when: false
+  changed_when: false
+  register: kubectl_version
+
 - name: "Download kubectl binary ({{ ansible_system|lower }} {{ kubetools_arch[ansible_architecture] }})"
   ansible.builtin.get_url:
     url: "{{ kubetools_kubectl_dl_url }}"
@@ -6,9 +17,10 @@
     mode: u=rwx,g=rx,o=rx
     owner: "{{ kubetools_user_id }}"
     group: "{{ kubetools_group_id }}"
+  when: not kubectl_binary.stat.exists or kubetools_kubectl_version not in kubectl_version.stdout
 
 # kube config
-- name: Ensure kubeconfig folder exists
+- name: Ensure kube config folder exists
   ansible.builtin.file:
     state: directory
     path: "{{ kubetools_config_source_dir }}"
@@ -28,31 +40,20 @@
   when: kubetools_kube_conf_files is defined
 
 ### User rc files
-- name: Configure .bashrc for kubectl
+- name: Configure dot files for kubectl
   ansible.builtin.blockinfile:
-    path: "~{{ kubetools_user_id }}/.bashrc"
+    path: "~{{ kubetools_user_id }}/{{ item }}"
     create: true
     mode: u=rw,g=r,o=r
     owner: "{{ kubetools_user_id }}"
     group: "{{ kubetools_group_id }}"
-    marker: "# {mark} ANSIBLE MANAGED BLOCK {{ kubetools_managed_by }}"
+    marker: "# {mark} ------------------ {{ kubetools_managed_by }}"
     block: |
       alias k=kubectl
-      export do="-o yaml --dry-run=client"
-
-- name: Configure .zshrc.local for kubectl
-  ansible.builtin.lineinfile:
-    path: "~{{ kubetools_user_id }}/.zshrc.local"
-    line: "{{ item }} {{ kubetools_managed_by }}"
-    regexp: "^{{ item.split('=')[0] }}="
-    create: true
-    mode: u=rw,g=r,o=r
-    owner: "{{ kubetools_user_id }}"
-    group: "{{ kubetools_group_id }}"
+      export do="-o=yaml --dry-run=client"
   loop:
-    - 'alias k=kubectl'
-    - 'export o="-o yaml"'
-    - 'export d="--dry-run=client"'
+    - ".bash_profile"
+    - ".zshenv"
 
 - name: Configure bash autocomplete for kubectl
   ansible.builtin.lineinfile:

@@ -1,0 +1,7 @@
+---
+- name: Prepare
+  hosts: all
+  tasks:
+    - name: Add the user needed to test role with defaults
+      ansible.builtin.user:
+        name: chris

@@ -22,3 +22,8 @@ kubetools_arch:
   arm64: arm64
 
 kubetools_managed_by: "# Managed by Ansible role ansible-role-kubetools"
+
+kubetools_kubectl_bin_path: "{{ kubetools_bin_path }}/kubectl"
+kubetools_helm_bin_path: "{{ kubetools_bin_path }}/helm"
+kubetools_argo_bin_path: "{{ kubetools_bin_path }}/kubectl_argo_rollouts"
+kubetools_kustomize_bin_path: "{{ kubetools_bin_path }}/kustomize"

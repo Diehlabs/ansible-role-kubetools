@@ -8,7 +8,6 @@ kubetools_kubectl_version: 1.21.1
 kubetools_user_id: "{{ user_id }}"
 kubetools_group_id: "{{ kubetools_user_gid_by_os[ansible_system] }}"
 kubetools_shell_type: zsh
-kubetools_bin_dir_win: c:\windows
 kubetools_config_source_dir: "~{{ kubetools_user_id }}/.kube"
 kubetools_bin_path: /usr/local/bin/
 kubetools_tanzu_install: false
