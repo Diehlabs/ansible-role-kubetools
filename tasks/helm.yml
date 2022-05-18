@@ -1,17 +1,17 @@
 ---
 - name: Verify Helm binary
-  stat:
+  ansible.builtin.stat:
     path: "{{ kubetools_helm_bin_path }}"
   register: helm_binary
 
 - name: Verify Helm version
-  command: "{{ kubetools_helm_bin_path }} version"
+  ansible.builtin.command: "{{ kubetools_helm_bin_path }} version"
   failed_when: false
   changed_when: false
   register: helm_version
 
 - name: Download Helm archive
-  get_url:
+  ansible.builtin.get_url:
     url: "{{ kubetools_helm_dl_url }}"
     dest: /tmp/helm.tar.gz
     mode: u=rw,g=rw,o=r

@@ -1,11 +1,11 @@
 ---
 - name: Verify kubectl binary
-  stat:
+  ansible.builtin.stat:
     path: "{{ kubetools_kubectl_bin_path }}"
   register: kubectl_binary
 
 - name: Verify kubectl version
-  command: "{{ kubetools_kubectl_bin_path }} version"
+  ansible.builtin.command: "{{ kubetools_kubectl_bin_path }} version"
   failed_when: false
   changed_when: false
   register: kubectl_version

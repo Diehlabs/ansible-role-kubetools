@@ -10,18 +10,18 @@
 #     group: "{{ kubetools_group_id }}"
 
 - name: Verify Kustomize binary
-  stat:
+  ansible.builtin.stat:
     path: "{{ kubetools_kustomize_bin_path }}"
   register: kustomize_binary
 
 - name: Verify Kustomize version
-  command: "{{ kubetools_kustomize_bin_path }} version"
+  ansible.builtin.command: "{{ kubetools_kustomize_bin_path }} version"
   failed_when: false
   changed_when: false
   register: kustomize_version
 
 - name: Download kustomize archive
-  get_url:
+  ansible.builtin.get_url:
     url: "{{ kubetools_kustomize_dl_url }}"
     dest: /tmp/kustomize.tar.gz
     mode: u=rw,g=rw,o=r

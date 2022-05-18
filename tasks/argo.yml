@@ -1,11 +1,11 @@
 ---
 - name: Verify Argo binary
-  stat:
+  ansible.builtin.stat:
     path: "{{ kubetools_argo_bin_path }}"
   register: argo_binary
 
 - name: Verify Argo version
-  command: "{{ kubetools_argo_bin_path }} version"
+  ansible.builtin.command: "{{ kubetools_argo_bin_path }} version"
   failed_when: false
   changed_when: false
   register: argo_version
