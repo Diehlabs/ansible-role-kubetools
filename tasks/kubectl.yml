@@ -5,7 +5,7 @@
   register: kubectl_binary
 
 - name: Verify kubectl version
-  ansible.builtin.command: "{{ kubetools_kubectl_bin_path }} version"
+  ansible.builtin.command: "{{ kubetools_kubectl_bin_path }} version --client"
   failed_when: false
   changed_when: false
   register: kubectl_version
