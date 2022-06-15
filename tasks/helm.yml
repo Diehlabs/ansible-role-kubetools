@@ -21,6 +21,7 @@
   when: not helm_binary.stat.exists or kubetools_helm_version not in helm_version.stdout
 
 - name: Extract Helm
+  become: True
   ansible.builtin.unarchive:
     remote_src: yes
     src: /tmp/helm.tar.gz

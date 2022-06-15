@@ -11,6 +11,7 @@
   register: argo_version
 
 - name: Download Argo kubectl plugin
+  become: True
   ansible.builtin.get_url:
     # As of 11/30/2021 the only arch is amd64 for releases
     url: "{{ kubetools_argo_dl_url }}"
