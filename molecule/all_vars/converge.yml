@@ -3,7 +3,7 @@
   hosts: all
   tasks:
     - name: "Include kubetools"
-      include_role:
+      ansible.builtin.include_role:
         name: "ansible-role-kubetools"
       vars:
         kubetools_user_id: chris
@@ -12,3 +12,4 @@
         kubetools_kustomize_version: 4.4.0
         kubetools_helm_version: 3.7.1
         kubetools_argo_version: 1.1.1
+        kubetools_kubectl_version: 1.21.1

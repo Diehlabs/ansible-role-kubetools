@@ -5,12 +5,13 @@
   register: kubectl_binary
 
 - name: Verify kubectl version
-  ansible.builtin.command: "{{ kubetools_kubectl_bin_path }} version"
+  ansible.builtin.command: "{{ kubetools_kubectl_bin_path }} version --client"
   failed_when: false
   changed_when: false
   register: kubectl_version
 
-- name: "Download kubectl binary ({{ ansible_system|lower }} {{ kubetools_arch[ansible_architecture] }})"
+- name: "Download kubectl binary ({{ ansible_system | lower }} {{ kubetools_arch[ansible_architecture] }})"
+  become: True
   ansible.builtin.get_url:
     url: "{{ kubetools_kubectl_dl_url }}"
     dest: "{{ kubetools_bin_path }}"

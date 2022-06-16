@@ -5,6 +5,12 @@
   hosts: all
   gather_facts: false
   tasks:
-  - name: Example assertion
-    assert:
-      that: true
+  - name: Verify kubectl version
+    ansible.builtin.command: "/usr/local/bin/kubectl version --client"
+    failed_when: false
+    changed_when: false
+    register: kubectl_version
+
+  - name: Ensure kubectl is correct version
+    ansible.builtin.assert:
+      that: '"1.21.1" in kubectl_version.stdout'

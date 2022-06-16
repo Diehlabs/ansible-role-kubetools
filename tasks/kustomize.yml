@@ -31,6 +31,7 @@
   when: not kustomize_binary.stat.exists or kubetools_kustomize_version not in kustomize_version.stdout
 
 - name: Extract kustomize
+  become: True
   ansible.builtin.unarchive:
     remote_src: yes
     src: /tmp/kustomize.tar.gz
