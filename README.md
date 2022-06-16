@@ -3,12 +3,14 @@
 =========
 
 Installs and configures kubectl, helm, etc.
-Work in progress, only tested working on Ubuntu Linux so far, 16.04/18.04/20.04
+Tested on Ubuntu Linux 20.04 and various late MacOS versions.
+
+When used with Ubuntu-20.04 in WSL, you must first remove /usr/local/bin/kubectl or use a non-default value for variable "kubetools_bin_path".
 
 Requirements
 ------------
 
-Any pre-requisites that may not be covered by Ansible itself or the role should be mentioned here. For instance, if the role uses the EC2 module, it may be a good idea to mention in this section that the boto package is required.
+None.
 
 Role Variables
 --------------
@@ -38,7 +40,7 @@ kubetools_kube_conf_files:
 Dependencies
 ------------
 
-A list of other roles hosted on Galaxy should go here, plus any details in regards to parameters that may need to be set for other roles, or variables that are used from other roles.
+None.
 
 Example Playbook
 ----------------

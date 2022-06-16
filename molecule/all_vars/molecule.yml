@@ -8,6 +8,9 @@ driver:
 platforms:
   - name: ubuntu
     image: ubuntu:20.04
+    # tmpfs:
+    #   - /run
+    #   - /tmp
 
 provisioner:
   name: ansible
