@@ -1,0 +1,23 @@
+---
+# https://github.com/istio/istio/releases
+
+- name: Verify istioctl binary
+  ansible.builtin.stat:
+    path: "{{ kubetools_istio_bin_path }}"
+  register: istioctl_binary
+
+- name: Verify istioctl version
+  ansible.builtin.command: "{{ kubetools_istio_bin_path }} version"
+  failed_when: false
+  changed_when: false
+  register: istioctl_version
+
+- name: Download istioctl archive
+  ansible.builtin.unarchive:
+    remote_src: yes
+    src: "{{ kubetools_istioctl_dl_url }}"
+    dest: "{{ kubetools_bin_path }}"
+    mode: u=rwx,g=rx,o=rx
+    owner: "{{ kubetools_user_id }}"
+    group: "{{ kubetools_group_id }}"
+  when: not istioctl_binary.stat.exists or kubetools_istioctl_version not in istioctl_version.stdout

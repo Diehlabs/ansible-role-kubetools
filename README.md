@@ -19,6 +19,7 @@ Role Variables
 |---|---|---|---|
 kubetools_kubectl_version | Version of kubectl to install | 1.21.1 | YES |
 kubetools_kustomize_version | Version of kustomize to install | 4.4.0 | no |
+kubetools_istioctl_version | Version of istioctl to install | 1.14.1 | no |
 kubetools_helm_version | Version of helm to install | 3.7.1 | no |
 kubetools_argo_version | Version of argo to install | 1.1.1 | no |
 kubetools_user_id | The user ID to configure kubetools for | "{{ user_id }}" | YES |
