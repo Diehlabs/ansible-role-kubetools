@@ -13,3 +13,4 @@
         kubetools_helm_version: 3.7.1
         kubetools_argo_version: 1.1.1
         kubetools_kubectl_version: 1.21.1
+        kubetools_istioctl_version: 1.14.1

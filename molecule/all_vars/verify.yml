@@ -24,3 +24,13 @@
   - name: Ensure helm is correct version
     ansible.builtin.assert:
       that: '"3.7.1" in helm_version.stdout'
+
+  - name: Get istioctl version
+    ansible.builtin.command: "/usr/local/bin/istioctl version"
+    failed_when: false
+    changed_when: false
+    register: istioctl_version
+
+  - name: Ensure istioctl is correct version
+    ansible.builtin.assert:
+      that: '"1.14.1" in istioctl_version.stdout'

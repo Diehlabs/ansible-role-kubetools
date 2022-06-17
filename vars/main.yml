@@ -6,6 +6,8 @@ kubetools_kubectl_dl_url: "https://storage.googleapis.com/kubernetes-release/rel
 
 kubetools_kustomize_dl_url: "https://github.com/kubernetes-sigs/kustomize/releases/download/kustomize%2Fv{{ kubetools_kustomize_version }}/kustomize_v{{ kubetools_kustomize_version }}_{{ ansible_system | lower }}_{{ kubetools_arch[ansible_architecture] }}.tar.gz"
 
+kubetools_istioctl_dl_url: "https://github.com/istio/istio/releases/download/{{ kubetools_istioctl_version }}/istioctl-{{ kubetools_istioctl_version }}-{{ ansible_system | lower }}-{{ kubetools_arch[ansible_architecture] }}.tar.gz"
+
 # As of 11/30/2021 only amd64 is available for these binaries
 # tanzu_dl_url: https://github.com/vmware-tanzu/community-edition/releases/download/{{ kubetools_tanzu_version }}/tce-windows-amd64-{{ kubetools_tanzu_version }}.zip
 
@@ -21,9 +23,13 @@ kubetools_arch:
   aarch64: arm64
   arm64: arm64
 
+# will need to handle this for non-standard release naming for istio
+# kubetools_istio_os_name: {{ ansible_system | lower }}
+
 kubetools_managed_by: "# Managed by Ansible role ansible-role-kubetools"
 
 kubetools_kubectl_bin_path: "{{ kubetools_bin_path }}/kubectl"
 kubetools_helm_bin_path: "{{ kubetools_bin_path }}/helm"
 kubetools_argo_bin_path: "{{ kubetools_bin_path }}/kubectl_argo_rollouts"
 kubetools_kustomize_bin_path: "{{ kubetools_bin_path }}/kustomize"
+kubetools_istio_bin_path: "{{ kubetools_bin_path }}/istioctl"

@@ -23,6 +23,10 @@
   include_tasks: tanzu.yml
   when: kubetools_tanzu_install == true
 
+- name: Install istioctl
+  include_tasks: istioctl.yml
+  when: kubetools_istioctl_version is defined
+
 # Not appending {{kubetools_managed_by}} since vim doesn't like the comments on the lines
 - name: Configure vimrc for kube usage
   ansible.builtin.lineinfile:
