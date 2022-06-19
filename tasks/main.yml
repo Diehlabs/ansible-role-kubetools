@@ -7,6 +7,14 @@
 - name: Install kubectl
   include_tasks: kubectl.yml
 
+- name: Install Argo rollouts
+  include_tasks: argo.yml
+  when: kubetools_argo_version is defined
+
+- name: Install Azure workload identity
+  include_tasks: azwi.yml
+  when: kubetools_azwi_version is defined
+
 - name: Install helm
   include_tasks: helm.yml
   when: kubetools_helm_version is defined
@@ -15,9 +23,6 @@
   include_tasks: kustomize.yml
   when: kubetools_kustomize_version is defined
 
-- name: Install Argo rollouts
-  include_tasks: argo.yml
-  when: kubetools_argo_version is defined
 
 - name: Install Tanzu CLI
   include_tasks: tanzu.yml

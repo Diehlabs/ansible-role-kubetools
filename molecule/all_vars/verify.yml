@@ -34,3 +34,13 @@
   - name: Ensure istioctl is correct version
     ansible.builtin.assert:
       that: '"1.14.1" in istioctl_version.stdout'
+
+  - name: Get azwi version
+    ansible.builtin.command: "/usr/local/bin/azwi version"
+    failed_when: false
+    changed_when: false
+    register: azwi_version
+
+  - name: Ensure azwi is correct version
+    ansible.builtin.assert:
+      that: '"0.10.0" in azwi_version.stdout'

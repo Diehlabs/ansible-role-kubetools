@@ -1,0 +1,23 @@
+---
+# https://github.com/Azure/azure-workload-identity/releases
+
+- name: Verify azwi binary
+  ansible.builtin.stat:
+    path: "{{ kubetools_azwi_bin_path }}"
+  register: azwi_binary
+
+- name: Verify azwi version
+  ansible.builtin.command: "{{ kubetools_azwi_bin_path }} version"
+  failed_when: false
+  changed_when: false
+  register: azwi_version
+
+- name: Download azwi archive
+  ansible.builtin.unarchive:
+    remote_src: yes
+    src: "{{ kubetools_azwi_dl_url }}"
+    dest: "{{ kubetools_bin_path }}"
+    mode: u=rwx,g=rx,o=rx
+    owner: "{{ kubetools_user_id }}"
+    group: "{{ kubetools_group_id }}"
+  when: not azwi_binary.stat.exists or kubetools_azwi_version not in azwi_version.stdout
