@@ -1,10 +1,10 @@
 ---
 # defaults file for kubectl
-# kubetools_argo_version: 1.1.1
-# kubetools_azwi_version: 0.10.0
-# kubetools_helm_version: 3.7.1
-# kubetools_istioctl_version: 1.14.1
-kubetools_kubectl_version: 1.21.1
+# kubetools_argo_rollouts_version: 1.2.2
+# kubetools_azwi_version: 0.11.0
+# kubetools_helm_version: 3.9.3
+# kubetools_istioctl_version: 1.14.3
+kubetools_kubectl_version: 1.24.3
 # kubetools_kustomize_version: 4.4.0
 
 
@@ -12,7 +12,7 @@ kubetools_user_id: "{{ user_id }}"
 kubetools_group_id: "{{ kubetools_user_gid_by_os[ansible_system] }}"
 kubetools_shell_type: zsh
 kubetools_config_source_dir: "~{{ kubetools_user_id }}/.kube"
-kubetools_bin_path: /usr/local/bin/
+kubetools_bin_path: "~{{ kubetools_user_id }}/.local/bin"
 kubetools_tanzu_install: false
 
 # kubetools_kube_conf_files:
