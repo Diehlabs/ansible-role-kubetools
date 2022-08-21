@@ -4,11 +4,20 @@
 # add krew!
 # https://krew.sigs.k8s.io/docs/user-guide/setup/install/
 
+- name: Ensure binary directory exists
+  ansible.builtin.file:
+    mode: u=rwx,g=rwx
+    owner: "{{ kubetools_user_id }}"
+    group: "{{ kubetools_group_id }}"
+    path: "{{ kubetools_bin_path }}"
+    state: directory
+    recurse: true
+
 - name: Install kubectl
   include_tasks: kubectl.yml
 
-- name: Install Argo rollouts
-  include_tasks: argo.yml
+- name: Install Argo Rollouts
+  include_tasks: argo-rollouts.yml
   when: kubetools_argo_version is defined
 
 - name: Install Azure workload identity
@@ -22,7 +31,6 @@
 - name: Install kustomize
   include_tasks: kustomize.yml
   when: kubetools_kustomize_version is defined
-
 
 - name: Install Tanzu CLI
   include_tasks: tanzu.yml

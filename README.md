@@ -7,6 +7,9 @@ Tested on Ubuntu Linux 20.04 and various late MacOS versions.
 
 When used with Ubuntu-20.04 in WSL, you must first remove /usr/local/bin/kubectl or use a non-default value for variable "kubetools_bin_path".
 
+## TODO
+* Ensure shell completions are installed for all tools
+
 Requirements
 ------------
 
@@ -49,9 +52,9 @@ Example Playbook
 
 Including an example of how to use your role (for instance, with variables passed in as parameters) is always nice for users too:
 
-    - hosts: servers
+    - hosts: localhost
       roles:
-         - { role: kubetools, kubetools_user: chris }
+         - { role: kubetools, kubetools_user: chrisdiehl }
 
 License
 -------

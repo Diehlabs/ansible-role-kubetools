@@ -1,16 +1,16 @@
 ---
-- name: Verify Argo binary
+- name: Verify Argo Rollouts binary
   ansible.builtin.stat:
     path: "{{ kubetools_argo_bin_path }}"
   register: argo_binary
 
-- name: Verify Argo version
+- name: Verify Argo Rollouts version
   ansible.builtin.command: "{{ kubetools_argo_bin_path }} version"
   failed_when: false
   changed_when: false
   register: argo_version
 
-- name: Download Argo kubectl plugin
+- name: Download Argo Rollouts kubectl plugin
   become: True
   ansible.builtin.get_url:
     # As of 11/30/2021 the only arch is amd64 for releases
@@ -22,7 +22,7 @@
   when: not argo_binary.stat.exists or kubetools_argo_version not in argo_version.stdout
 
 ### User rc files
-- name: Configure user rc files for Argo
+- name: Configure user rc files for Argo Rollouts
   ansible.builtin.lineinfile:
     path: "~{{ kubetools_user_id }}/{{ item.value }}"
     line: "source <(kubectl argo rollouts completion {{ item.key }}) {{ kubetools_managed_by }}"
