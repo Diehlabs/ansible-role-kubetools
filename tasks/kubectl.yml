@@ -14,7 +14,10 @@
   ansible.builtin.debug:
     var: kubectl_version_installed
 
-- name: "Download kubectl binary {{ ansible_system | lower }} {{ kubetools_arch[ansible_architecture] }} {{ kubetools_kubectl_version }}"
+#  Problems with ansible-lint, looks like they are addressing so working around it for now
+# https://github.com/Diehlabs/ansible-role-kubetools/actions/runs/4204345826
+# - name: "Download kubectl binary {{ ansible_system | lower }} {{ kubetools_arch[ansible_architecture] }} {{ kubetools_kubectl_version }}"
+- name: "Download kubectl binary"
   become: True
   ansible.builtin.get_url:
     url: "{{ kubetools_kubectl_dl_url }}"
