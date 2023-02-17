@@ -11,7 +11,7 @@
     group: "{{ kubetools_group_id }}"
     path: "{{ kubetools_bin_path }}"
     state: directory
-    recurse: true
+    # recurse: true
 
 - name: Install kubectl
   ansible.builtin.include_tasks: kubectl.yml
