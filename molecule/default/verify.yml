@@ -14,3 +14,13 @@
   - name: Ensure kubectl is correct version
     ansible.builtin.assert:
       that: '"1.24.10" in kubectl_version_installed.stdout'
+
+  - name: Get helm version
+    ansible.builtin.command: "/home/chris/.local/bin/helm version"
+    failed_when: false
+    changed_when: false
+    register: helm_version
+
+  - name: Ensure helm is correct version
+    ansible.builtin.assert:
+      that: '"3.11.1" in helm_version.stdout'

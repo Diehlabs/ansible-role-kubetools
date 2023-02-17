@@ -30,23 +30,33 @@
   register: kustomize_downloaded
   when: not kustomize_binary.stat.exists or kubetools_kustomize_version not in kustomize_version.stdout
 
-- name: Extract kustomize
-  become: True
-  ansible.builtin.unarchive:
-    remote_src: yes
-    src: /tmp/kustomize.tar.gz
-    dest: "{{ kubetools_bin_path }}"
-    extra_opts: [--strip-components=1]
-    mode: u=rwx,g=rx,o=rx
-    owner: "{{ kubetools_user_id }}"
-    group: "{{ kubetools_group_id }}"
+# - name: Extract kustomize
+#   become: True
+#   ansible.builtin.unarchive:
+#     remote_src: yes
+#     src: /tmp/kustomize.tar.gz
+#     dest: "{{ kubetools_bin_path }}"
+#     extra_opts: [--strip-components=1]
+#     mode: u=rwx,g=rx,o=rx
+#     owner: "{{ kubetools_user_id }}"
+#     group: "{{ kubetools_group_id }}"
+#   when: ansible_system == 'Linux' and kustomize_downloaded is changed
+
+- name: Extract kustomize with shell (Linux)
+  ansible.builtin.shell: |
+    tar -xvf /tmp/kustomize.tar.gz -C {{ kubetools_bin_path }}
+    chown {{ kubetools_user_id }}:{{ kubetools_group_id }} {{ kubetools_bin_path }}/kustomize
+    rm /tmp/kustomize.tar.gz
+    # mode: u=rwx,g=rx,o=rx
   when: ansible_system == 'Linux' and kustomize_downloaded is changed
+  changed_when: False
 
 # Because gnu-tar isn't found in path on remote Mac systems in non-interactive shell, use cmd to extract instead
-- name: Extract kustomize with shell
+- name: Extract kustomize with shell (OSX)
   ansible.builtin.shell: |
     gtar -xvf /tmp/kustomize.tar.gz -C {{ kubetools_bin_path }}
     chown {{ kubetools_user_id }}:{{ kubetools_group_id }} {{ kubetools_bin_path }}/kustomize
+    rm /tmp/kustomize.tar.gz
     # mode: u=rwx,g=rx,o=rx
   when: ansible_system == 'Darwin' and kustomize_downloaded is changed
   changed_when: False
