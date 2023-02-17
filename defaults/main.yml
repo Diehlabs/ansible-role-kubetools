@@ -4,7 +4,7 @@
 # kubetools_azwi_version: 0.11.0
 # kubetools_helm_version: 3.9.3
 # kubetools_istioctl_version: 1.14.3
-kubetools_kubectl_version: 1.24.3
+kubetools_kubectl_version: 1.24.10
 # kubetools_kustomize_version: 4.4.0
 
 

@@ -8,7 +8,11 @@
   ansible.builtin.command: "{{ kubetools_kubectl_bin_path }} version --client"
   failed_when: false
   changed_when: false
-  register: kubectl_version
+  register: kubectl_version_installed
+
+- name: Output kubectl version data
+  ansible.builtin.debug:
+    var: kubectl_version_installed
 
 - name: "Download kubectl binary ({{ ansible_system | lower }} {{ kubetools_arch[ansible_architecture] }})"
   become: True
@@ -18,7 +22,7 @@
     mode: u=rwx,g=rx,o=rx
     owner: "{{ kubetools_user_id }}"
     group: "{{ kubetools_group_id }}"
-  when: not kubectl_binary.stat.exists or kubetools_kubectl_version not in kubectl_version.stdout
+  when: not kubectl_binary.stat.exists or kubetools_kubectl_version not in kubectl_version_installed.stdout
 
 # kube config
 - name: Ensure kube config folder exists
