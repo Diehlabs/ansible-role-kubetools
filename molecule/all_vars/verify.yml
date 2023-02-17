@@ -6,7 +6,7 @@
   gather_facts: false
   tasks:
   - name: Get kubectl version
-    ansible.builtin.command: "/usr/local/bin/kubectl version --client"
+    ansible.builtin.command: "/home/chris/.local/bin/kubectl version --client"
     failed_when: false
     changed_when: false
     register: kubectl_version_installed
@@ -16,7 +16,7 @@
       that: '"1.21.1" in kubectl_version_installed.stdout'
 
   - name: Get helm version
-    ansible.builtin.command: "/usr/local/bin/helm version"
+    ansible.builtin.command: "/home/chris/.local/bin/helm version"
     failed_when: false
     changed_when: false
     register: helm_version
@@ -26,7 +26,7 @@
       that: '"3.7.1" in helm_version.stdout'
 
   - name: Get istioctl version
-    ansible.builtin.command: "/usr/local/bin/istioctl version"
+    ansible.builtin.command: "/home/chris/.local/bin/istioctl version"
     failed_when: false
     changed_when: false
     register: istioctl_version
@@ -36,7 +36,7 @@
       that: '"1.14.1" in istioctl_version.stdout'
 
   - name: Get azwi version
-    ansible.builtin.command: "/usr/local/bin/azwi version"
+    ansible.builtin.command: "/home/chris/.local/bin/azwi version"
     failed_when: false
     changed_when: false
     register: azwi_version

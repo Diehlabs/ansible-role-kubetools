@@ -9,6 +9,8 @@ When used with Ubuntu-20.04 in WSL, you must first remove /usr/local/bin/kubectl
 
 ## TODO
 * Ensure shell completions are installed for all tools
+* Add Krew
+* Add k9s
 
 Requirements
 ------------
