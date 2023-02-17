@@ -35,6 +35,7 @@
     mode: u=rwx,g=rx
     owner: "{{ kubetools_user_id }}"
     group: "{{ kubetools_group_id }}"
+  when: kubetools_kube_conf_files is defined
 
 - name: Write kube config files
   ansible.builtin.copy:

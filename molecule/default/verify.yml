@@ -6,11 +6,11 @@
   gather_facts: false
   tasks:
   - name: Verify kubectl version
-    ansible.builtin.command: "/usr/local/bin/kubectl version --client"
+    ansible.builtin.command: "/home/chris/.local/bin/kubectl version --client"
     failed_when: false
     changed_when: false
     register: kubectl_version_installed
 
   - name: Ensure kubectl is correct version
     ansible.builtin.assert:
-      that: '"1.21.1" in kubectl_version_installed.stdout'
+      that: '"1.24.10" in kubectl_version_installed.stdout'

@@ -16,40 +16,40 @@
 - name: Install kubectl
   ansible.builtin.include_tasks: kubectl.yml
 
-- name: Install Argo Rollouts
-  ansible.builtin.include_tasks: argo-rollouts.yml
-  when: kubetools_argo_version is defined
+# - name: Install Argo Rollouts
+#   ansible.builtin.include_tasks: argo-rollouts.yml
+#   when: kubetools_argo_version is defined
 
-- name: Install Azure workload identity
-  ansible.builtin.include_tasks: azwi.yml
-  when: kubetools_azwi_version is defined
+# - name: Install Azure workload identity
+#   ansible.builtin.include_tasks: azwi.yml
+#   when: kubetools_azwi_version is defined
 
-- name: Install helm
-  ansible.builtin.include_tasks: helm.yml
-  when: kubetools_helm_version is defined
+# - name: Install helm
+#   ansible.builtin.include_tasks: helm.yml
+#   when: kubetools_helm_version is defined
 
-- name: Install kustomize
-  ansible.builtin.include_tasks: kustomize.yml
-  when: kubetools_kustomize_version is defined
+# - name: Install kustomize
+#   ansible.builtin.include_tasks: kustomize.yml
+#   when: kubetools_kustomize_version is defined
 
-- name: Install Tanzu CLI
-  ansible.builtin.include_tasks: tanzu.yml
-  when: kubetools_tanzu_install == 'true'
+# - name: Install Tanzu CLI
+#   ansible.builtin.include_tasks: tanzu.yml
+#   when: kubetools_tanzu_install == 'true'
 
-- name: Install istioctl
-  ansible.builtin.include_tasks: istioctl.yml
-  when: kubetools_istioctl_version is defined
+# - name: Install istioctl
+#   ansible.builtin.include_tasks: istioctl.yml
+#   when: kubetools_istioctl_version is defined
 
-# Not appending {{kubetools_managed_by}} since vim doesn't like the comments on the lines
-- name: Configure vimrc for kube usage
-  ansible.builtin.lineinfile:
-    path: "~{{ kubetools_user_id }}/.vimrc"
-    line: "{{ item }}"
-    create: true
-    mode: u=rw,g=r,o=r
-    owner: "{{ kubetools_user_id }}"
-    group: "{{ kubetools_group_id }}"
-  loop:
-    - 'set expandtab'
-    - 'set tabstop=2'
-    - 'set shiftwidth=2'
+# # Not appending {{kubetools_managed_by}} since vim doesn't like the comments on the lines
+# - name: Configure vimrc for kube usage
+#   ansible.builtin.lineinfile:
+#     path: "~{{ kubetools_user_id }}/.vimrc"
+#     line: "{{ item }}"
+#     create: true
+#     mode: u=rw,g=r,o=r
+#     owner: "{{ kubetools_user_id }}"
+#     group: "{{ kubetools_group_id }}"
+#   loop:
+#     - 'set expandtab'
+#     - 'set tabstop=2'
+#     - 'set shiftwidth=2'
