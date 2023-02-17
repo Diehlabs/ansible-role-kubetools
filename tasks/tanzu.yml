@@ -5,7 +5,7 @@
   when: ansible_system == "Darwin"
 
 - name: Install Tanzu packages (OSX)
-  ansible.builtin.homebrew:
+  community.builtin.homebrew:
     name:
       - tanzu-community-edition
     state: "present"

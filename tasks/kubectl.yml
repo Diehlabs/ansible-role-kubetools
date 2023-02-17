@@ -14,7 +14,7 @@
   ansible.builtin.debug:
     var: kubectl_version_installed
 
-- name: "Download kubectl binary ({{ ansible_system | lower }} {{ kubetools_arch[ansible_architecture] }})"
+- name: "Download kubectl binary {{ ansible_system | lower }} {{ kubetools_arch[ansible_architecture] }} {{ kubetools_kubectl_version }}"
   become: True
   ansible.builtin.get_url:
     url: "{{ kubetools_kubectl_dl_url }}"

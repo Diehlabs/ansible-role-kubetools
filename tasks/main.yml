@@ -14,30 +14,30 @@
     recurse: true
 
 - name: Install kubectl
-  include_tasks: kubectl.yml
+  ansible.builtin.include_tasks: kubectl.yml
 
 - name: Install Argo Rollouts
-  include_tasks: argo-rollouts.yml
+  ansible.builtin.include_tasks: argo-rollouts.yml
   when: kubetools_argo_version is defined
 
 - name: Install Azure workload identity
-  include_tasks: azwi.yml
+  ansible.builtin.include_tasks: azwi.yml
   when: kubetools_azwi_version is defined
 
 - name: Install helm
-  include_tasks: helm.yml
+  ansible.builtin.include_tasks: helm.yml
   when: kubetools_helm_version is defined
 
 - name: Install kustomize
-  include_tasks: kustomize.yml
+  ansible.builtin.include_tasks: kustomize.yml
   when: kubetools_kustomize_version is defined
 
 - name: Install Tanzu CLI
-  include_tasks: tanzu.yml
-  when: kubetools_tanzu_install == true
+  ansible.builtin.include_tasks: tanzu.yml
+  when: kubetools_tanzu_install == 'true'
 
 - name: Install istioctl
-  include_tasks: istioctl.yml
+  ansible.builtin.include_tasks: istioctl.yml
   when: kubetools_istioctl_version is defined
 
 # Not appending {{kubetools_managed_by}} since vim doesn't like the comments on the lines

@@ -1,12 +1,21 @@
 ---
 # defaults file for kubectl
-# kubetools_argo_rollouts_version: 1.2.2
-# kubetools_azwi_version: 0.11.0
-# kubetools_helm_version: 3.9.3
-# kubetools_istioctl_version: 1.14.3
-kubetools_kubectl_version: 1.24.10
-# kubetools_kustomize_version: 4.4.0
 
+kubetools_kubectl_version: 1.24.10
+
+# https://github.com/kubernetes-sigs/kustomize/releases
+kubetools_kustomize_version: 5.0.0
+
+# https://github.com/helm/helm/releases
+kubetools_helm_version: 3.11.1
+
+# kubetools_argo_rollouts_version: 1.2.2
+
+# https://github.com/Azure/azure-workload-identity/releases
+# kubetools_azwi_version: 0.15.0
+
+# https://istio.io/latest/docs/releases/supported-releases/#support-status-of-istio-releases
+# kubetools_istioctl_version: 1.17
 
 kubetools_user_id: "{{ user_id }}"
 kubetools_group_id: "{{ kubetools_user_gid_by_os[ansible_system] }}"
