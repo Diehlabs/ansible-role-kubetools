@@ -6,7 +6,7 @@
   gather_facts: false
   tasks:
   - name: Get kubectl version
-    ansible.builtin.command: "/usr/local/bin/kubectl version --client"
+    ansible.builtin.command: "/home/chris/.local/bin/kubectl version --client"
     failed_when: false
     changed_when: false
     register: kubectl_version_installed
